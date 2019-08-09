@@ -1,0 +1,545 @@
+body {
+	min-width: 1580px;
+	max-width: 1920px;
+	height: 100%;
+}
+
+section {
+	overflow: auto;
+}
+
+header #logo {
+	float: left;
+	margin: 0;
+}
+
+header #logo a {
+	padding: 23px 0;
+	background-color: #2F4363;
+}
+
+header #logo img {
+	padding: 11px 32px 9px;
+}
+
+header #logout {
+	padding: 11px 100px 11px 225px;
+	margin: 0;
+	height: 60px;
+	background-color: #2A3954;
+	text-align: right;
+}
+
+header #logout a {
+	font-size: 18px;
+	color: #fff;
+	line-height: 35px;
+}
+
+header #logout a:hover {
+	text-decoration: none;
+}
+
+.left {
+	float: left;
+	width: 214px;
+}
+
+.left ul {
+	list-style: none;
+	padding: 0;
+}
+
+.left a:hover {
+	text-decoration: none;
+	background-color: #f3f7f8;
+}
+
+.left #menu1Font {
+	padding-left: 45px;
+	vertical-align: middle;
+	font-size: 16px;
+}
+
+.left ul li a {
+	display: block;
+	line-height: 1;
+	padding: 17px 20px 19px 20px;
+	font-size: 16px;
+	color: #686b72;
+	cursor: pointer;
+}
+
+.left img {
+	padding: 0 12px;
+}
+
+.left ul li:nth-child(2) img {
+	padding: 0 8px;
+}
+
+.left ul li ul li a {
+	display: block;
+	line-height: 1;
+	padding: 17px 24px 19px 60px;
+	font-size: 15px;
+	color: #686b72;
+}
+
+.right {
+	padding: 0 80px 60px;
+	margin-left: 214px;
+	background-color: #ECF0F7;
+	border-left: 1px solid #d3dee4;
+}
+
+.right h1 {
+	margin: 0;
+	padding: 50px 0 30px;
+}
+
+.right h2 {
+	margin: 0;
+	padding: 50px 0 30px;
+}
+
+.right table {
+	margin-bottom: 80px;
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	background-color: #fff;
+}
+
+.rigth tr, .right td {
+	border: 1px solid #d3dee4;
+}
+
+.right td {
+	padding: 30px;
+}
+
+footer {
+	height: 60px;
+	background-color: #f3f3f3;
+	border-top: 1px solid #d3dee4;
+	text-align: center;
+	color: #777;
+}
+
+footer p {
+	line-height: 60px;
+	margin: 0;
+}
+
+.product-add form {
+	padding: 50px 0;
+	background-color: #fff;
+}
+.product-add input[type="text"]{
+	padding:3px;
+}
+
+.product-add table {
+	margin: 0 auto;
+	width: 90%;
+}
+
+.product-add table th, .product-add table td {
+	border: 1px solid #bdc7cd;
+	padding: 20px;
+}
+
+.product-add table th {
+	width: 20%;
+	text-align: center;
+	font-size: 17px;
+	color: #323232;
+	background-color: #ECF0F7;
+}
+
+.product-add table td {
+	text-align: left;
+}
+
+.product-update {
+	padding: 0 30px;
+}
+
+.product-update form {
+	background-color: #fff;
+	margin-top: 20px;
+	padding: 30px 0px;
+}
+
+.product-update table {
+	width: 760px;
+	margin: 0px auto 30px;
+	border-collapse: collapse;
+}
+
+.product-update th, .product-update td {
+	padding: 10px;
+	border: 1px solid #d3dee4;
+}
+
+.product-update th {
+	font-size: 15px;
+	text-align: center;
+}
+
+.product-update input, .product-update select {
+	height: 26px;
+}
+
+.product-update input[type="text"] {
+	padding: 3px;
+}
+
+.admin-btn {
+	margin: 0 auto;
+	display: block;
+	width: 160px;
+	height: 50px;
+	background: #5376B0;
+	border: 1px solid #354C70;
+	outline: 0;
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.mngList form {
+	padding: 50px 0 0;
+	background-color: #fff;
+}
+
+.mngList table {
+	margin: 0 auto;
+	width: 90%;
+}
+
+.mngList table th {
+	padding: 10px;
+	text-align: center;
+	font-size: 16px;
+	color: #323232;
+	background-color: #ECF0F7;
+}
+
+.mngList td, .mngList th {
+	padding: 15px;
+}
+
+.mngList
+ 
+.search-tb
+ 
+th
+:not
+ 
+(
+:last-child
+ 
+)
+{
+border
+:
+ 
+1
+px
+ 
+solid
+ 
+#d3dee4
+;
+
+
+}
+.mngList .search-tb td {
+	text-align: left;
+}
+
+.mngList table tr:first-child th {
+	border: 1px solid #d3dee4;
+}
+
+.mngList table tr:last-child th {
+	padding: 30px;
+	background-color: #fff;
+}
+
+.mngList td>p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 180px;
+}
+
+.mngList p {
+	margin-left: 80px;
+	font-size: 16px;
+}
+
+.mngList a {
+	cursor: pointer;
+}
+
+.mngList input[type="text"] {
+	padding: 3px;
+}
+
+#calendar {
+	width: 19px;
+	height: 19px;
+	vertical-align: middle;
+	background: none;
+	border: 0;
+	background-image: url(../images/home/calendar.png);
+	background-repeat: no-repeat;
+}
+
+.board-btn {
+	margin-top: 30px;
+	margin-bottom: 17.5px;
+}
+
+.board-btn a {
+	padding: 20px 30px;
+	border: 1px solid #ccc;
+	border-radius: 25px 25px 0 0;
+	font-size: 16px;
+	background-color: #e0e0e0;
+	color: #777;
+}
+
+#point {
+	border: 1px solid #b7b7b7;
+	border-radius: 25px 25px 0 0;
+	border-bottom: 1px solid #fff;
+	background-color: white;
+	color: #323232;
+}
+
+.order-form {
+	background-color: #fff;
+	padding: 30px 50px 50px;
+}
+
+.order-form table {
+	padding: 5px;
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 1px solid #8D8B88;
+}
+
+.order-form h4 {
+	text-align: left;
+	margin-top: 60px;
+	margin-bottom: 10px;
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.order-tb td {
+	border-bottom: 1px solid #D6D6D6;
+}
+
+.order-tb #field {
+	width: 14%;
+	border-right: 1px solid #D6D6D6;
+	text-align: center;
+}
+
+.order-tb td, .order-tb th {
+	padding: 15px 10px 14px 20px;
+	font-size: 15px;
+}
+
+.order-tb select {
+	height: 30px;
+	vertical-align: middle;
+}
+
+.order-tb button {
+	outline: 0;
+	cursor: pointer;
+	border: 1px solid #323232;
+	background-color: #D6D6D6;
+	color: #323232;
+	padding: 5px;
+	height: 30px;
+	vertical-align: middle;
+}
+
+.cart-tb {
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 1px solid #8D8B88;
+}
+
+.cart-tb th, .cart-tb td {
+	border-bottom: 1px solid #D6D6D6;
+}
+
+.cart-tb tr, .cart-tb th, .cart-tb td {
+	padding: 10px;
+}
+
+.cart-tb th {
+	text-align: center;
+}
+
+.tot-div {
+	width: 100%;
+}
+
+.tot-tb {
+	margin-top: 20px;
+	width: 50%;
+	border-collapse: collapse;
+	float: right;
+	border: 1px solid #8D8B88;
+}
+
+.tot-tb th {
+	text-align: center;
+}
+
+.tot-tb th, .tot-tb td {
+	padding: 10px;
+}
+
+#tot-tb-tr1 th {
+	font-size: 16px;
+}
+
+.write {
+	background-color: #fff;
+	margin: 0 auto;
+	padding: 20px 0;
+}
+
+.write table {
+	margin: 0 auto;
+	width: 65%;
+}
+
+.write td, .write th {
+	padding: 15px;
+}
+
+.write table th {
+	width: 25%;
+	padding: 10px;
+	font-size: 20px;
+	font-weight: 500;
+	color: #323232;
+	border: 1px solid #d3dee4;
+	text-align: center;
+}
+
+.write table th {
+	font-size: 18px;
+	font-weight: 500;
+	background-color: #ECF0F7;
+}
+
+.write table td {
+	text-align: left;
+}
+
+.write textarea {
+	resize: none;
+}
+
+.write input[type="text"] {
+	padding: 3px;
+}
+#reg-btn{
+    width: 100px;
+    height: 40px;
+    background-color: #5376B0;
+    border: 1px solid #354C70;
+    outline: 0;
+    color: #fff;
+    font-weight: 500;
+    font-size: 18px;
+}
+#updat-btn{
+	width: 100px;
+    height: 40px;
+    background-color: #5376B0;
+    border: 1px solid #354C70;
+    outline: 0;
+    color: #fff;
+    font-weight: 500;
+    font-size: 18px;
+}
+#cancel-btn{
+	width: 100px;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #777;
+    outline: 0;
+    color: #323232;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.boardRead table {
+	margin: 0 auto;
+	width: 80%;
+}
+
+.boardRead td {
+	padding: 11px 15px;
+	border: 0;
+	border-top: 1px solid #d3dee4;
+	border-bottom: 1px solid #d3dee4;
+	font-size: 16px;
+}
+
+.boardRead font {
+	font-weight: bold;
+}
+
+.boardRead tr:not (:last-child ) td:last-child {
+	text-align: right;
+}
+
+.boardRead button {
+	padding: 6px 12px;
+	background: none;
+	border: 1px solid #777;
+	outline: 0;
+}
+
+.boardUpdate table {
+	margin: 0 auto;
+	width: 60%;
+}
+
+.boardUpdate table th {
+	width: 20%;
+	padding: 10px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: 500;
+	background-color: #ECF0F7;
+	border: 1px solid #d3dee4;
+}
+
+.boardUpdate table td {
+	padding: 10px;
+	text-align: left;
+}
+
+.boardUpdate textarea {
+	resize: none;
+	padding: 7px;
+}
+
+.boardUpdate input[type="text"] {
+	padding: 3px;
+}

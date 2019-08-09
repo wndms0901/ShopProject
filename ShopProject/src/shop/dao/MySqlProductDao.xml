@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.dao.ProductDao">
+	<insert id="productAdd" parameterType="product">
+		insert into product
+		(mediumCtgryNo, mediumCtgryCode, lowCtgryName,
+		pName, price, pCompany,
+		pStock, pImage, pContent)
+		values(
+		#{mediumCtgryNo},
+		(select
+		mediumCtgryCode
+		from medium_category
+		where mediumCtgryNo=
+		#{mediumCtgryNo}),
+		#{lowCtgryName}, #{pName}, #{price}, #{pCompany},
+		#{pStock}, #{pImage}, #{pContent})
+	</insert>
+	<select id="newList" resultType="product" parameterType="map">
+		select pno,pName, price, pImage from (
+		select pno, pName, price,
+		pImage, pBuyNum, pRegisterDate
+		from product
+		order by pRegisterDate desc
+		Limit 30)f
+		order by
+		<choose>
+			<when test="sort == 'new'">pRegisterDate desc</when>
+			<when test="sort == 'popular'">pBuyNum desc</when>
+			<when test="sort == 'lowPrice'">price asc</when>
+			<when test="sort == 'highPrice'"> price desc</when>
+			<otherwise>pRegisterDate desc</otherwise>
+		</choose>
+			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="bestList" resultType="product" parameterType="map">
+		select pno,pName, price, pImage from (
+		select pno, pName, price,
+		pImage, pBuyNum, pRegisterDate
+		from product
+		order by pBuyNum desc Limit
+		30)f
+		order by
+		<choose>
+			<when test="sort == 'new'">pRegisterDate desc</when>
+			<when test="sort == 'popular'">pBuyNum desc</when>
+			<when test="sort == 'lowPrice'">price asc</when>
+			<when test="sort == 'highPrice'"> price desc</when>
+			<otherwise>pBuyNum desc</otherwise>
+		</choose>
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="newMain" resultType="product">
+		select pno, pName, price, pImage
+		from product
+		order by pRegisterDate desc Limit 12
+	</select>
+
+	<select id="bestMain" resultType="product" parameterType="map">
+		select
+		distinct
+		p.pno, p.pName,p.price, p.pImage
+		from product p, low_category l
+		where p.lowCtgryName=l.lowCtgryName
+		and
+		p.mediumCtgryCode=#{mCode} and
+		l.lowCtgryCode=#{lowCode}
+		order by pBuyNum desc Limit 8;
+	</select>
+
+	<select id="pList" resultType="product" parameterType="map">
+		<choose>
+			<when test="lowNo!=null and lowNo!=''">
+				select p.pno, p.pName,p.price, p.pImage
+				from product p
+				, low_category l
+				where p.lowCtgryName=l.lowCtgryName
+				and
+				p.mediumCtgryCode=#{mCode} and l.lowCtgryNo=#{lowNo}
+			</when>
+			<otherwise>
+				select pno, pName,price, pImage
+				from product
+				where
+				mediumCtgryCode=#{mCode}
+			</otherwise>
+		</choose>
+		order by
+		<choose>
+			<when test="sort == 'new'">pRegisterDate desc</when>
+			<when test="sort == 'popular'">pBuyNum desc</when>
+			<when test="sort == 'lowPrice'">price asc</when>
+			<when test="sort == 'highPrice'">price desc</when>
+			<otherwise>pRegisterDate desc</otherwise>
+		</choose>
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="pListCount" resultType="int" parameterType="map">
+	<choose>
+			<when test="lowNo!=null and lowNo!=''">
+				select count(*)
+				from product p
+				, low_category l
+				where p.lowCtgryName=l.lowCtgryName
+				and
+				p.mediumCtgryCode=#{mCode} and l.lowCtgryNo=#{lowNo}
+			</when>
+			<otherwise>
+				select count(*)
+				from product
+				where
+				mediumCtgryCode=#{mCode}
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="pRead" resultType="product" parameterType="Integer">
+		select
+		m.mediumCtgryName, p.mediumCtgryNo, p.mediumCtgryCode, p.lowCtgryName, p.pName,
+		p.pCompany, p.price, p.pStock, p.pStatus,
+		p.pImage, p.pContent, p.pno
+		from product
+		p ,
+		medium_category m
+		where
+		p.mediumCtgryCode = m.mediumCtgryCode
+		and
+		pno=#{pno}
+	</select>
+
+	<select id="pSearch" resultType="product" parameterType="map">
+		select pno, pName, price, pImage
+		from product
+		where
+		<choose>
+			<when test="pName == null">pCompany like '%${pCompany}%' </when>
+			<when test="pCompany == null">pName like '%${pName}%'</when>
+		</choose>
+		order by
+		<choose>
+			<when test="sort == 'new'">pRegisterDate desc</when>
+			<when test="sort == 'popular'">pBuyNum desc</when>
+			<when test="sort == 'lowPrice'">price asc</when>
+			<when test="sort == 'highPrice'">price desc</when>
+			<otherwise>pRegisterDate desc</otherwise>
+		</choose>
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="pSearchCount" resultType="int" parameterType="map">
+		select count(*)
+		from product
+		where
+		<choose>
+			<when test="pName == null">pCompany like '%${pCompany}%' </when>
+			<when test="pCompany == null">pName like '%${pName}%'</when>
+		</choose>
+	</select>
+
+	<select id="pGet" resultType="product" parameterType="Integer">
+		select
+		pno,
+		pName, price, pImage , pStock
+		from product
+		where
+		pno=#{pno}
+	</select>
+	<select id="pStock" resultType="int" parameterType="int">
+		select pStock
+		from product
+		where
+		pno=#{pno}
+	</select>
+	<update id="pStockMinus" parameterType="map">
+		update product set
+		pStock=#{pStock}
+		where pno=#{pno}
+	</update>
+	<update id="pBuyNumUpdate" parameterType="map">
+		update product set
+		pBuyNum = pBuyNum + ${pQuantity}
+		where pno=#{pno}
+	</update>
+	<select id="productList" resultType="product"
+		parameterType="map">
+	select p.pno,
+		h.highCtgryName, m.mediumCtgryName, p.lowCtgryName,
+		p.pName, p.price,
+		p.pCompany, p.pStock, p.pBuyNum, p.pStatus, p.pRegisterDate
+		from
+		product p,
+		high_category h , medium_category m
+		where p.mediumCtgryNo =
+		m.mediumCtgryNo
+		and
+		m.highCtgryNo = h.highCtgryNo
+		<if test="search.keyword != null and search.keyword !=''">
+			and ${search.type} like '%${search.keyword}%'
+		</if>
+		<choose>
+			<when
+				test="search.high != null and search.high != ''">
+				<if test="search.medium == '' and search.high!=3">and p.mediumCtgryNo = ${search.high}</if>
+				<if test="search.medium == '' and search.high == 3">and p.mediumCtgryNo in (3,4,5)</if>
+				<if test="search.medium!=null and search.medium !=''">and p.mediumCtgryNo = ${search.medium}</if>
+				<if test="search.low!=null and search.low!=''">and p.mediumCtgryNo =${search.medium} and p.lowCtgryName=#{search.low}</if>
+			</when>
+		</choose>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(p.pRegisterDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(p.pRegisterDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+		<if test="search.pStatus != null and search.pStatus !=''">
+		and p.pStatus = #{search.pStatus}
+		</if>
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="productListCount" resultType="int"
+		parameterType="search">
+	select count(*)
+		from
+		product p
+		<trim prefix="where" prefixOverrides="and"> 
+		<if test="keyword != null and keyword !=''">
+			${type} like '%${keyword}%'
+		</if>
+		<choose>
+			<when
+				test="high != null and high != ''">
+				<if test="medium == '' and high!=3">and mediumCtgryNo = ${high}</if>
+				<if test="medium == '' and high == 3">and mediumCtgryNo in (3,4,5)</if>
+				<if test="medium!=null and medium !=''">and mediumCtgryNo = ${medium}</if>
+				<if test="low!=null and low!=''">and mediumCtgryNo =${medium} and lowCtgryName=#{low}</if>
+			</when>
+		</choose>
+		<if test="startDate != null and startDate !=''">
+		<![CDATA[
+  and date_format(pRegisterDate, '%Y-%m-%d') >= #{startDate}
+    and date_format(pRegisterDate, '%Y-%m-%d') <= #{endDate}
+]]>
+		</if>
+		<if test="pStatus != null and pStatus !=''">
+		and pStatus = #{pStatus}
+		</if>
+		</trim>
+	</select>
+	<delete id="pDelete" parameterType="int">
+	delete from product
+	where pno=#{pno}
+	</delete>
+	<update id="pUpdate" parameterType="product">
+	update product set
+	mediumCtgryNo=#{mediumCtgryNo}, lowCtgryName=#{lowCtgryName},
+	pName=#{pName}, price=#{price}, pCompany=#{pCompany},
+	pStock=#{pStock}, pStatus=#{pStatus}
+	<if test="pImage!=null and pImage!=''">
+	, pImage=#{pImage}
+	</if>
+	<if test="pContent!=null and pContent!=''">
+	, pContent=#{pContent}
+	</if>
+	where pno=#{pno}
+	</update>
+</mapper>

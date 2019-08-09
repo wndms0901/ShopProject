@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.dao.CategoryDao">
+	<select id="highCtgryList" resultType="category">
+		select *
+		from high_category
+		order by highCtgryNo;
+	</select>
+	<select id="mediumCtgryList" resultType="category"
+		parameterType="int">
+		select mediumCtgryNo, mediumCtgryName
+		from
+		medium_category
+		where highCtgryNo=#{highCtgryNo}
+	</select>
+	<select id="lowCtgryList" resultType="category"
+		parameterType="map">
+		select l.lowCtgryName, l.lowCtgryNo, m.mediumCtgryCode,
+		m.mediumCtgryName
+		from medium_category m ,low_category l
+		where
+		m.mediumCtgryNo = l.mediumCtgryNo
+		and m.mediumCtgryCode=#{mCode}
+	</select>
+	<select id="lowList" resultType="category" parameterType="int">
+	select lowCtgryName
+	from low_category
+	where mediumCtgryNo=#{mediumCtgryNo}
+	</select>
+	<select id="lowCtgrySelect" resultType="category"
+		parameterType="int">
+		select m.mediumCtgryCode, l.lowCtgryName
+		from
+		medium_category m ,low_category l
+		where l.mediumCtgryNo=m.mediumCtgryNo
+		and l.mediumCtgryNo=#{mediumCtgryNo}
+	</select>
+	<select id="CtgryAll" resultType="category" parameterType="int">
+		select m.mediumCtgryName, m.mediumCtgryCode, l.lowCtgryName,
+		l.lowCtgryNo
+		from medium_category m , low_category l
+		where
+		m.mediumCtgryNo=l.mediumCtgryNo and m.mediumCtgryNo = #{num};
+	</select>
+	<select id="lowCtgry1" resultType="category">
+		select * from low_category
+		where highCtgryNo = 1;
+	</select>
+
+	<select id="lowCtgry2" resultType="category">
+		select * from low_category
+		where highCtgryNo = 2;
+	</select>
+
+	<select id="smallCtgry" resultType="category">
+		select mediumCtgryName,
+		mediumCtgryCode from medium_category
+		where highCtgryNo = 3;
+	</select>
+
+</mapper>

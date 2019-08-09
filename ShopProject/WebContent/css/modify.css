@@ -1,0 +1,930 @@
+.col-sm-4 {
+	width: 25%;
+}
+
+.col-sm-9 {
+	width: 100%;
+	height: 50px;
+}
+
+#subMenu { /* header 하위메뉴(강아지, 고양이) */
+	padding: 10px 10px;
+	display: inline-block;
+}
+
+.header-bottom {
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+
+#totalCtgry button {
+	padding:15px 36px 15px;
+	width: 225px;
+	height: 50px;
+	background: #FEBA0F;
+	border:0;
+	text-align:left;
+}
+#totalCtgry img{
+	padding-bottom:5px;
+}
+
+#totalCtgry font {
+	padding-left:15px;
+	color: #484848;
+	font-weight:bold;
+	font-size:17px;
+}
+
+.container {
+	padding-right: 15px;
+	padding-left: 15px;
+	/* margin-right: auto;
+	margin-left: auto; */
+}
+
+@media ( min-width :1240px) {
+	.container {
+		width: 1270px;
+		margin: 0 auto;
+	}
+}
+
+.carousel-inner {
+	position: relative;
+	width: 100%;
+	height: 500px;
+	/* background-color: yellow; */
+	overflow: hidden;
+}
+
+.girl {
+	margin-left: 0;
+	width: 1903px;
+	height: 500px;
+}
+
+.img-responsive { /* 슬라이드 이미지 width */
+	display: block;
+	height: auto;
+	max-width: 1903px;
+}
+
+.mainmenu ul li a { /* 카테고리 메뉴 */
+	color: #323232;
+	font-family: 'Roboto', sans-serif;
+	font-size: 17px;
+	font-weight: 300;
+	padding: 16px 0px 16px;
+}
+
+.more p {
+	text-align: right;
+	margin: 0 20px;
+}
+
+.more button {
+	border: 1px solid gray;
+	background-color: rgba(0, 0, 0, 0);
+	color: gray;
+	padding: 5px;
+	width: 80px;
+	outline:0;
+}
+
+/* .more button:hover {
+	color: white;
+	background-color: #FEBA0F;
+} */
+
+.more #btn1 { /* 더보기 버튼 */
+	border-radius: 5px;
+}
+
+.more #btn2 { /* 강아지 버튼 */
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	background-color:#FEBA0F;
+	color:white;
+}
+
+.more #btn3 { /* 고양이 버튼 */
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.allCtgry{ /* 모달창 카테고리 */
+	padding: 30px;
+	display:inline-block;
+	width:19.5%;
+	height:300px;
+	vertical-align:middle;
+}
+.allCtgry>a{ /* 중분류 */
+	font-size:20px;
+	color:#323232;
+}
+.allCtgry hr{
+	margin:10px 0 10px;
+	border: 1px solid #FEBA0F;
+}
+
+.allCtgry ul{
+	padding:0;
+}
+.allCtgry li{
+	padding: 5px 0 5px;
+}
+.allCtgry li a {
+	font-size:16px;
+	color: #323232;
+}
+
+.product-Btn {
+	margin-top: 20px;
+}
+
+.product-Btn button {
+	background: none;
+	border: 1px solid #8D8B88;
+	cursor: pointer;
+	overflow: visible;
+	white-space: nowrap;
+	width: 288px;
+	height: 55px;
+	font-size: 19px;
+}
+
+.product-Btn #btn1 { /* 장바구니 버튼 */
+	margin-right: 5px;
+	background: white;
+}
+
+.product-Btn #btn2 { /* 구매하기 버튼 */
+	margin-left: 5px;
+	background: #FEBA0F;
+}
+
+#shop { /* 모달창 계속쇼핑 버튼 */
+	padding: 6px 16px;
+	border: 1px solid #484848;
+	background-color: white;
+	color: #484848;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#cart { /* 모달창 장바구니보기 버튼 */
+	padding: 6px 16px;
+	border: 1px solid orange;
+	background-color: #FEBA0F;
+	color: #484848;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.footer-bottom { /* footer 맨끝 a태그 */
+	margin: 0px;
+	padding-top: 0px;
+	height: 50px;
+	line-height: 50px;
+}
+
+.footer-bottom a {
+	padding: 10px 20px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+ul.sub-menu { /* header 서브 메뉴 */
+	position: absolute;
+	top: 50px;
+	left: 0;
+	background: white;
+	border: 1px solid black;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 270px;
+	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 999;
+}
+
+.product-Info table {
+	width: 100%;
+	font-size: 15px;
+	border-collapse: collapse;
+}
+
+.product-Info td {
+	padding: 10px;
+	border-bottom: 1px solid #D6D6D6;
+}
+
+.product-Info #key {
+	width: 25%;
+}
+
+.productinfo p {
+	padding-left: 20px;
+	padding-right: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 285px;
+}
+
+.amount tr:first-child { /* view 수량조절 부분 */
+	background-color: #eee;
+	height: 85px;
+	border-bottom: 1px solid #8D8B88;
+}
+
+.amount tr:first-child td:first-child {
+	padding: 10px 0px 10px 20px;
+	width: 50%;
+}
+
+.amount tr:first-child td:nth-child(2) {
+	padding: 10px 0;
+	width: 25%;
+}
+
+.amount tr:first-child td:nth-child(3) {
+	padding: 10px 0;
+	font-size: 20px;
+	width: 25%;
+}
+
+.amount tr:nth-child(2) td font {
+	padding-left: 10px;
+	font-size: 25px;
+}
+
+.amount input[type="text"] {
+	width: 50px;
+	height: 27px;
+	padding: 0 5px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.lowCtgry ul {
+	height: 110px;
+}
+
+.lowCtgry a {
+	text-align: center;
+	padding: 43.5px 0px !important;
+}
+
+.loginForm table {
+	padding: 10px;
+}
+
+.join-form table { /* 회원가입 테이블 */
+	padding: 5px;
+	width: 100%;
+	border-top:1px solid #777;
+	border-bottom:1px solid #777;
+}
+
+.join-form td { /* 회원가입 */
+	border-bottom: 1px solid #D6D6D6;
+	padding: 10px;
+}
+
+.join-form #field { /* 회원가입 */
+	width: 20%;
+	border-right: 1px solid #D6D6D6;
+}
+
+.join-form select { /* 회원가입 */
+	width: 90px;
+	background:none;
+	border:1px solid #a6a6a6;
+	vertical-align:middle;	
+}
+
+.join-form h2 {
+	text-align: center;
+}
+
+.join-form>p {
+	text-align: center;
+}
+
+.join-form td>font {
+	color: red;
+}
+.join-table input[type="text"]{
+	height:30px;
+	padding:5px;
+}
+.join-table input[type="password"]{
+	height:30px;
+	padding:7px;
+}
+.join-table button{
+	outline:0;
+	border: 1px solid black;
+    background: #323232;
+    color: white;
+    padding: 5px;
+    width: 100px;
+    height:30px;
+	vertical-align:middle;	
+}
+.join-button { /* 회원가입 버튼 div */
+	margin-top:60px;
+	text-align:center;
+}
+.join-button button{ /* 회원가입 버튼 */
+	width: 180px;
+    height: 52px;
+    color: #323232;
+    font-weight: normal;
+    font-size: 16px;
+    border: 1px solid #777;
+    background: #fff;
+    cursor: pointer;
+}
+.join-button input[type="button"]{ /* 회원정보수정 버튼 */
+	width: 180px;
+    height: 52px;
+    background:none;
+    border: 1px solid #777;
+    color: #323232;
+    font-size: 16px;
+}
+.join-button #ok{
+	background:#FEBA0F;
+	border: 1px solid #FEBA0F;
+}
+
+.join-Info { /* 회원가입 완료 정보 */
+	width: 40%;
+	margin: 0 auto;
+}
+
+.join-Info p {
+	text-align: center;
+	font-size: 17px;
+}
+
+.join-Info #info {
+	/* text-align:left;
+	padding-left:100px; */
+	font-size: 20px;
+}
+
+.join-Info button {
+	background: none;
+	border: 1px solid #323232;
+	cursor: pointer;
+	overflow: visible;
+	white-space: nowrap;
+	width: 130px;
+	height: 40px;
+	font-size: 15px;
+	border-radius: 5px;
+}
+
+.search { /* 검색페이지의 검색창 */
+	margin: 0px auto 60px;
+	width: 100%;
+	height: 70px;
+	border: 3px solid #eee;
+}
+
+.search th {
+	text-align: center;
+	height: 80px;
+}
+
+.search select {
+	padding: 2px;
+	background: none;
+	border: 1px solid #8D8B88;
+	color: #323232;
+	width: 100px;
+	height: 32px;
+	border-radius: 0;
+	resize: none;
+	vertical-align: middle;
+}
+
+.search input[type="text"] {
+	height: 32px;
+	vertical-align: middle;
+}
+
+.search input[type="submit"] {
+	border: 1px solid black;
+	background: #323232;
+	color: white;
+	padding: 5px;
+	width: 80px;
+}
+
+#empty {
+	text-align: center;
+	height: 150px;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 40px;
+}
+
+#empty p { /* 검색결과가 없을때 */
+	line-height: 80px;
+	font-size: 16px;
+	font-weight: normal;
+}
+
+.cart-tb { /* 장바구니 테이블 */
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 1px solid #8D8B88;
+}
+
+.cart-tb th, .cart-tb td {
+	border-bottom: 1px solid #D6D6D6;
+}
+
+.cart-tb tr, .cart-tb th, .cart-tb td {
+	padding: 10px;
+}
+
+.cart-tb th {
+	text-align: center;
+}
+
+.cart-tb input[type="text"] {
+	text-align: center;
+	background: none;
+	border: 0;
+}
+.cart-tb-bottom p{ /* 장바구니 30일 보관 문구 */
+	width:89%;
+	display:inline-block;
+	text-align:right;
+}
+
+.tot-div {
+	width: 100%;
+}
+
+.tot-tb { /* 장바구니 합계 테이블 */
+	margin-top: 20px;
+	width: 50%;
+	border-collapse: collapse;
+	float: right;
+	border: 1px solid #8D8B88;
+}
+
+.tot-tb th, .tot-tb td {
+	padding: 10px;
+}
+
+.tot-tb th {
+	text-align: center;
+}
+
+#tot-tb-tr1 th {
+	font-size: 16px;
+}
+
+#tot-tb-tr2 th {
+	font-size: 20px;
+}
+
+.empty { /* 빈장바구니  */
+	width: 30%;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+}
+.empty p {
+	text-align: center;
+	font-size: 16px;
+	color: #8D8B88;
+}
+
+.empty a {
+	padding: 10px 25px;
+	border: 1px solid #D6D6D6;
+	background: white;
+	color: #323232;
+}
+
+#dlt-btn { /* 선택상품삭제 버튼 */
+	margin-top: 10px;
+	background: white;
+	border: 1px solid #323232;
+	color: #323232;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	padding: 0 15px 0 15px;
+	width: 128px;
+	height: 35px;
+}
+
+.order-Btn { /* 주문하기 버튼 div */
+	margin-top: 130px;
+	width: 100%;
+	text-align: right;
+}
+
+.order-Btn button {
+	background: white;
+	border: 1px solid #323232;
+	color: #323232;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	padding: 0 20px 0 20px;
+	width: 180px;
+	height: 50px;
+}
+
+#orderAll { /* 전체상품주문 버튼 */
+	background: #323232;
+	color: white;
+}
+
+#guestPrchs {
+	background: #323232;
+	border: 1px solid black;
+	color: white;
+	display: block;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	padding: 6px 25px;
+	width: 100%;
+	height: 42px;
+}
+
+.order-form table { /* 주문서 작성 */
+	padding: 5px;
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 1px solid #8D8B88;
+}
+
+.order-form select {
+	width: 95px;
+	background: none;
+	border: 1px solid #ccc;
+	vertical-align: middle;
+}
+
+.order-form>p {
+	text-align: center;
+}
+
+.order-form td>font {
+	color: red;
+}
+
+.order-form h4 {
+	text-align: left;
+	margin-top: 60px;
+}
+
+.order-tb td { /* 주문서작성 테이블 */
+	border-bottom: 1px solid #D6D6D6;
+}
+
+.order-tb #field {
+	width: 13%;
+	border-right: 1px solid #D6D6D6;
+}
+
+.order-tb td, .order-tb th {
+	padding: 15px 10px 14px 20px;
+	font-size: 15px;
+}
+
+.order-tb input[type="text"] {
+	padding-left: 5px;
+	height: 31px;
+	border: 1px solid #ccc;
+}
+
+.order-tb input[type="radio"] {
+	width: 14px;
+	height: 14px;
+}
+.order-tb button{
+	outline:0;
+	border: 1px solid black;
+    background: #323232;
+    color: white;
+    padding: 5px;
+    width: 110px;
+    height:30px;
+	vertical-align:middle; 
+}
+
+input[id="pay-btn"] { /* 결제하기 버튼 */
+	background: none;
+	border: 1px solid #323232;
+	width: 250px;
+	height: 50px;
+	background: #FEBA0F;
+	color: #323232;
+	font-size: 18px;
+}
+
+.orderImg {
+	display: inline-block;
+	text-align: right;
+	width: 950px;
+	margin: 0;
+}
+
+.orderImg img { /* 장바구니,주문 이미지 */
+	margin: 0 15px 0;
+}
+
+.order-check {
+	padding: 20px;
+	margin: 20px 0 60px 0;
+	border-top: 1px solid #8D8B88;
+	border-bottom: 1px solid #8D8B88;
+	text-align: center;
+}
+
+.order-check p {
+	color: #323232;
+}
+
+#orderInfo {
+	margin-left: 480px;
+	text-align: left;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.orderCmplt-Btn { /* 주문완료 버튼 */
+	margin-top: 60px;
+	text-align: center;
+}
+
+.orderCmplt-Btn button {
+	background: none;
+	outline:0;
+	border: 1px solid #323232;
+	white-space: nowrap;
+	width: 150px;
+	height: 50px;
+	border-radius: 5px;
+	color: #323232;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	padding: 0 20px 0 20px;
+}
+.mypage{
+	border-left:1px solid #ccc;
+	/* display:inline-block; */
+	float:left;
+	padding:15px 15px 25px;
+}
+.mypage:not(:first-child) {
+	cursor:pointer;
+}
+.mypage p{
+	text-align:center;
+	font-size:18px;
+}
+.mypage table{
+	width:85%;
+	margin: 40px auto 20px;
+	border:1px solid #D6D6D6;
+	border-collapse:collapse;
+}
+.mypage table td{
+	padding:10px 20px;
+	font-size:16px;
+	border-bottom:1px solid #D6D6D6;
+}
+.mypage table td:last-child{
+	text-align:right;
+}	
+.mypage h2{
+	text-align:center;
+}
+.orderList-tb{ /* 주문내역조회 테이블 */
+	border-collapse:collapse;
+	width:100%;
+	margin:20px 0px 40px;
+}
+.orderList-tb th{
+	text-align:center;
+	height:50px;
+}
+.orderList-tb td, .orderList-tb th{
+	text-align:center;
+	border-top: 1px solid #ccc;
+}
+.mypage-btn{
+	margin-top:80px;
+	margin-bottom:80px;
+}
+.mypage-btn a{
+	padding:20px 30px;
+	border: 1px solid #ccc;
+	border-radius: 25px 25px 0 0;
+	font-size:16px;
+	background-color:#e0e0e0;
+	color:#777;
+}
+#point{
+	border: 1px solid #777;
+	border-radius: 25px 25px 0 0;
+	border-bottom:0;
+	background-color:white;
+	color:#323232;
+}
+.mileage-tb1{ /* 적립금 조회 테이블1 */
+	margin:20px 0;
+	width:33%;
+	border-collapse:collapse;
+	border:1px solid #D6D6D6;
+}
+.mileage-tb1 td{
+	padding:8px 25px;
+}
+.mileage-tb1 td:last-child{
+	text-align:right;
+}	
+.mileage-tb1 tr:first-child td{
+	padding-top:20px;
+}	
+.mileage-tb1 tr:last-child td{
+	padding-bottom:20px;
+}
+.mileage-tb2{ /* 적립금 조회 테이블2 */
+	margin:40px 0;
+	width:100%;
+	border-collapse:collapse;
+}
+.mileage-tb2 th{
+	padding:8px;
+	text-align:center;
+	border-bottom: 1px solid #D6D6D6;
+}
+.mileage-tb2 tr:first-child th{
+	border-top: 1px solid #8D8B88;
+	border-bottom: 1px solid #8D8B88;
+}	
+.mileage-tb2 tr:not(:first-child) th{
+	font-weight: normal;
+}
+.pwdCheck{ /* 회원정보-비밀번호 확인 */
+	width:40%;
+	margin:80px auto;
+	padding:30px;
+	border:1px solid #ccc;
+}
+.pwdCheck font{
+	vertical-align:middle;
+}
+.pwdCheck form{
+	margin-top:25px;
+	padding:25px;
+	text-align:center;
+	border:1px solid #D6D6D6;
+}
+.pwdCheck input[type="password"]{
+	height:35px;
+	margin-left:20px;
+	padding:5px 10px;
+	vertical-align:middle;
+}
+.pwdCheck input[type="submit"]{
+	height:35px;
+	border: 1px solid black;
+    background: #323232;
+    color: white;
+    padding: 5px;
+    width: 80px;
+}
+.event-btn{ /* 이벤트 페이지 버튼 */
+	margin-top:80px; 
+	margin-bottom:80px;
+}
+.event-btn a{
+	padding:20px 35px;
+	border: 1px solid #ccc;
+	border-radius: 25px 25px 0 0;
+	font-size:18px;
+	background-color:#e0e0e0;
+	color:#777;
+}
+.event-info{
+	padding:10px 13px;
+	text-align:center;
+	border-top: 1px solid #ddd;
+}
+.event-info a{
+	font-weight:bold;
+	font-size: 18px;
+	color: #323232;
+}
+.event-info a:hover{
+	text-decoration: underline;
+}
+.event-info font{
+	padding-top: 5px;
+	display:inline-block;
+	font-size:16px;
+	color: #777;
+}
+.board-view table{ /* 게시판 조회 */
+	width:100%;
+	margin: 30px 0 20px 0;
+	border-collapse: collapse;
+	border-top:1px solid #777;
+}
+.board-view font{
+	font-weight: bold;
+}
+.board-view td{
+	padding:12px 20px;
+	border-bottom:1px solid #ccc;
+	font-size:16px;
+}
+.board-view tr:not(:last-child) td:last-child{
+	text-align:right;
+}
+.board-view tr:last-child td{
+	border-bottom:1px solid #777;
+}
+.board-view button{
+	margin-bottom:80px;
+	padding:8px 18px;
+	background:none;
+	border:1px solid #777;
+	font-size:16px;
+	outline:0;
+}
+.board-view textarea{
+	background:none;
+	outline:0;
+}
+.location-info{
+	font-size: 16px;
+	text-align:right;
+}
+.notice-list{ /* 공지사항 목록 */
+	 padding-top: 30px;
+}
+.notice-list h2{
+	margin: 30px 0;
+	text-align:center;
+}
+.notice-list table{
+	margin-bottom:20px;
+	width:100%;
+	font-size:16px;
+}
+.notice-list th{
+	padding:11px;
+	border-top:1px solid #777;
+	border-bottom:1px solid #ccc;
+	text-align:center;
+}
+.notice-list td{
+	padding:11px 15px;
+	border-bottom:1px solid #ccc;
+	text-align:center;
+}
+.notice-list form{
+	margin:35px 0 70px 0;
+	text-align:right;
+}
+.notice-list select{
+	width:100px;
+	height: 35px;
+	background:none;
+	border: 1px solid #ccc;
+	vertical-align:middle;
+}
+.notice-list input[type="text"]{
+	padding: 7px;
+	height: 35px;
+	border: 1px solid #ccc;
+	vertical-align:middle;
+}
+.notice-list input[type="submit"]{
+	outline: 0;
+    border: 1px solid black;
+    background: #323232;
+    color: white;
+    width: 46px;
+    height: 35px;
+    vertical-align: middle;
+}

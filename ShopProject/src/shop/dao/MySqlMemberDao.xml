@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.dao.MemberDao">
+	<insert id="mbAdd" parameterType="member">
+		insert into member(mbId, mbPwd,
+		mbName, mbEmail, mbBirth,
+		mbTel, mbPhone, mbZip, mbAddr1, mbAddr2)
+		values (#{mbId}, #{mbPwd},
+		#{mbName}, #{mbEmail}, #{mbBirth},
+		#{mbTel},
+		#{mbPhone}, #{mbZip}, #{mbAddr1}, #{mbAddr2})
+	</insert>
+	<select id="mbRead" parameterType="String" resultType="member">
+		select *
+		from member
+		where mbId=#{mbId}
+	</select>
+	<update id="mbUpdate" parameterType="member">
+		update member
+		set
+		<if test="mbPwd != ''">
+			mbPwd=#{mbPwd}, mbPwdDate=now(),
+		</if>
+		mbEmail=#{mbEmail}, mbPhone=#{mbPhone},
+		mbTel=#{mbTel},
+		mbZip=#{mbZip},
+		mbAddr1=#{mbAddr1},
+		mbAddr2=#{mbAddr2}, mbBirth=#{mbBirth}
+		where
+		mbId=#{mbId}
+	</update>
+	<select id="mbIdCheck" parameterType="String" resultType="int">
+		select
+		count(*) from member
+		where mbId=#{mbId}
+	</select>
+	<select id="mbCheck" parameterType="map" resultType="int">
+		select
+		count(*) from member
+		where mbId=#{mbId} and mbPwd=#{mbPwd}
+	</select>
+	<update id="mbLogin" parameterType="String">
+	update member set
+	mbLoginTime=now()
+	where mbId=#{mbId}
+	</update>
+	<select id="mbOrder" parameterType="String" resultType="member">
+		select
+		mbName, mbTel, mbPhone, mbEmail , mbMileage
+		from member
+		where
+		mbId=#{mbId}
+	</select>
+	<insert id="cartmAdd" parameterType="map">
+		insert into cart
+		(mbId,pno,pQuantity)
+		values (#{mbId},#{pno},#{pQuantity})
+	</insert>
+	<update id="cartpAdd" parameterType="String">
+		update cart c, product p
+		set
+		c.pName =p.pName ,
+		c.price = p.price,
+		c.pImage = p.pImage
+		where c.pno=
+		p.pno and c.mbId = #{mbId}
+	</update>
+	<select id="cartRead" parameterType="String" resultType="cart">
+		select
+		pno, pName, price, pQuantity, pImage
+		from cart
+		where mbId=#{mbId}
+		order
+		by cartRegisterDate desc
+	</select>
+	<select id="cartQuantity" parameterType="map" resultType="int">
+		select
+		pQuantity
+		from cart
+		where mbId=#{mbId} and pno=#{pno}
+	</select>
+	<update id="cartChg" parameterType="map">
+		update cart set
+		pQuantity =
+		#{pQuantity}
+		where mbId=#{mbId} and pno=#{pno}
+	</update>
+	<delete id="cartDlt" parameterType="map">
+		delete from cart
+		where
+		mbId=#{mbId} and pno=#{pno}
+	</delete>
+	<delete id="cartCheck" parameterType="String">
+		delete from cart
+		where
+		mbId=#{mbId}
+		and now() > date_add(cartRegisterDate,interval+1 month)
+	</delete>
+	<select id="mbMileage" parameterType="String"
+		resultType="mileage">
+		select * from mileage
+		where mbId=#{mbId}
+		order by mileageDate
+		desc
+	</select>
+	<select id="mbMileageList" parameterType="map"
+		resultType="mileage">
+		select * from mileage
+		where mbId=#{mbId}
+		order by mileageDate
+		desc
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="mbMileageCount" parameterType="String" resultType="int">
+	select count(*) from mileage
+		where mbId=#{mbId}
+	</select>
+	<insert id="mileageAdd" parameterType="mileage">
+		insert into mileage (mbId,
+		mileage, orderId, content)
+		values (#{mbId}, #{mileage}, #{orderId},
+		#{content})
+	</insert>
+	<update id="mileageUpdate" parameterType="map">
+		update member set
+		mbMileage = #{mbMileage}
+		where mbId = #{mbId}
+	</update>
+	<select id="mypageOrder" parameterType="map"
+		resultType="myPage">
+		select orderDate, orderId, orderState
+		from member_order
+		where mbId=#{mbId}
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="totalOrder" parameterType="String"
+		resultType="myPage">
+		select count(*) as totalOrderCount, sum(productAmount) as
+		totalOrderAmount
+		from member_order
+		where mbId=#{mbId}
+	</select>
+	<select id="todayJoin" resultType="int">
+		select count(*) from
+		member
+		where curdate() = date_format(mbRegisterDate, '%Y-%m-%d')
+	</select>
+	<select id="monthJoin" resultType="int">
+		select count(*) from
+		member
+		<![CDATA[
+			where date_format(mbRegisterDate, '%Y-%m-%d') >= DATE_ADD(date_format(now(), '%Y-%m-%d'), INTERVAL -1 MONTH)
+			and mbRegisterDate <= now()
+]]>
+	</select>
+	<select id="memberList" parameterType="map" resultType="member">
+	select mbId, mbName, mbEmail, mbPhone, mbTel, mbBirth,
+	mbAddr1, mbMileage, mbRegisterDate ,mbLoginTime, mbMemo
+	from member
+	<trim prefix="where" prefixOverrides="and"> 
+		<if test="search.keyword != null and search.keyword !=''">
+		 ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(mbRegisterDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(mbRegisterDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+		and mbId != 'admin'
+		</trim>
+	order by mbRegisterDate desc
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="memberListCount" parameterType="map" resultType="int">
+	select count(*)
+	from member
+	<trim prefix="where" prefixOverrides="and"> 
+		<if test="search.keyword != null and search.keyword !=''">
+		 ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(mbRegisterDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(mbRegisterDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+		and mbId != 'admin'
+		</trim>
+	</select>
+	<update id="mbMemoUpdate" parameterType="map">
+	update member set
+	mbMemo=#{mbMemo}
+	where mbId=#{mbId}
+	</update>
+	<delete id="mbDelete" parameterType="String">
+	delete from member
+	where mbId=#{mbId}
+	</delete>
+</mapper>

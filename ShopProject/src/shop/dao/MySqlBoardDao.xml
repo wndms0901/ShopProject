@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.dao.BoardDao">
+	<select id="currentEvent" parameterType="map" resultType="event">
+		select no, title, image,
+		eventStart, eventEnd
+		from event
+		where eventEnd >= now()
+		LIMIT ${cri.pageStart}, ${cri.perPageNum}
+	</select>
+	<select id="currentEventCount" resultType="int">
+		select count(*)
+		from event
+		where eventEnd >= now()
+	</select>
+	<select id="endEvent" parameterType="map" resultType="event">
+		select no, title, image,
+		eventStart, eventEnd
+		from event
+		where now() > eventEnd
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="endEventCount" resultType="int">
+		select count(*)
+		from event
+		where now() > eventEnd
+	</select>
+	<select id="eventRead" parameterType="Integer"
+		resultType="event">
+		select bno, title, image, content, writer, readCount,
+		eventStart, eventEnd, regDate
+		from event
+		where no=#{no}
+	</select>
+	<update id="eventCountUpdate" parameterType="int">
+		update event
+		set
+		readCount = readCount + 1
+		where no=#{no}
+	</update>
+	<select id="noticeList" parameterType="map" resultType="notice">
+		select no, title, regDate, writer
+		from notice
+		<if test="keyword != null and keyword != ''">
+			where ${type} like '%${keyword}%'
+		</if>
+		order by no desc
+		LIMIT ${cri.pageStart}, ${cri.perPageNum}
+	</select>
+	<select id="noticeListCount" parameterType="map" resultType="int">
+		select count(*)
+		from notice
+		<if test="keyword != null and keyword != ''">
+			where ${type} like '%${keyword}%'
+		</if>
+	</select>
+	<select id="noticeRead" parameterType="Integer"
+		resultType="notice">
+		select bno, title, content, image, writer, readCount,
+		regDate
+		from notice
+		where no=#{no}
+	</select>
+	<update id="noticeCountUpdate" parameterType="int">
+		update notice
+		set
+		readCount = readCount + 1
+		where no=#{no}
+	</update>
+	<select id="boardList" resultType="board">
+		select bno, boardCode,
+		boardName
+		from board
+		order by bno
+	</select>
+	<select id="totalPostList" resultType="board"
+		parameterType="map">
+		<trim suffixOverrides="UNION">
+			<foreach collection="board" item="b">
+				(select b1.boardCode, b2.no, b1.boardName, b2.title, b2.writer,
+				b2.regDate,
+				b2.readCount
+				from board b1, ${b.boardCode} b2
+				where b1.bno
+				=b2.bno
+				<if test="search.keyword != null and search.keyword !=''">
+					and ${search.type} like '%${search.keyword}%'
+				</if>
+				<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(b2.regDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(b2.regDate, '%Y-%m-%d') <= #{search.endDate}
+				]]>
+				</if>
+				)
+				UNION
+			</foreach>
+		</trim>
+		order by regDate desc
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="totalPostListCount" resultType="int"
+		parameterType="map">
+		select count(*) from
+		<trim prefix="(" suffix=")" suffixOverrides="UNION ALL"> 
+			<foreach collection="board" item="b">
+				select no
+				from ${b.boardCode}
+			<trim prefix="where" prefixOverrides="and">
+				<if test="search.keyword != null and search.keyword !=''">
+					${search.type} like '%${search.keyword}%'
+				</if>
+				<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(regDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(regDate, '%Y-%m-%d') <= #{search.endDate}
+				]]>
+				</if>
+				</trim>
+				UNION ALL
+			</foreach>
+		</trim>
+		as total
+	</select>
+	<select id="postList" resultType="board" parameterType="map">
+		select b1.boardCode, b2.no, b1.boardName, b2.title, b2.writer,
+		b2.regDate,
+		b2.readCount
+		from board b1, ${board.boardCode} b2
+		where
+		b1.bno = b2.bno
+		<if test="search.keyword != null and search.keyword !=''">
+			and ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(b2.regDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(b2.regDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+		order by b2.regDate desc
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="postListCount" resultType="int" parameterType="map">
+		select count(*)
+		from ${board.boardCode}
+		<trim prefix="where" prefixOverrides="and">
+		<if test="search.keyword != null and search.keyword !=''">
+			${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(regDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(regDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+		</trim>
+	</select>
+	<insert id="postAdd" parameterType="board">
+		insert into ${boardCode}
+		<trim suffix=")">
+			(bno, title, content,
+			<if test="image!=''">
+				image,
+			</if>
+			writer
+			<if test="eventStart!=null and eventEnd!=null">
+				,eventStart , eventEnd
+			</if>
+		</trim>
+		values
+		<trim suffix=")">
+			((select bno from board where boardCode=#{boardCode}),
+			#{title},#{content},
+			<if test="image!=''">
+				#{image},
+			</if>
+			#{writer}
+			<if test="eventStart!=null and eventEnd!=null">
+				,#{eventStart} , #{eventEnd}
+			</if>
+		</trim>
+	</insert>
+	<update id="postUpdate" parameterType="board">
+		update ${boardCode} set
+		title=#{title}, writer=#{writer}
+		<if test="content!='' and content!=null">
+			,content=#{content}
+		</if>
+		<if test="image!='' and image!=null">
+			,image=#{image}
+		</if>
+		<if test="eventStart!='' and eventStart!=null">
+			,eventStart=#{eventStart}
+		</if>
+		<if test="eventEnd!='' and eventEnd!=null">
+			,eventEnd=#{eventEnd}
+		</if>
+		where no=#{no}
+	</update>
+	<delete id="postDelete" parameterType="map">
+		delete from ${boardCode}
+		where no=#{no}
+	</delete>
+</mapper>

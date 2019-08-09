@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.dao.OrderDao">
+	<insert id="mbOrderAdd" parameterType="order">
+		insert into member_order
+		(orderNo, orderId, mbId, productsCount,
+		buyerName, buyerEmail,
+		buyerPhone, buyerTel,
+		recipientName, recipientZip, recipientAddr1,
+		recipientAddr2,
+		recipientTel, recipientPhone,
+		orderMessage,
+		productAmount, finalAmount,
+		payType, bankName, depositName,
+		orderState,
+		mileageUse, mileageAdd, accountNumber)
+		values (#{orderNo}, #{orderId},
+		#{mbId}, #{productsCount},
+		#{buyerName}, #{buyerEmail}, #{buyerPhone},
+		#{buyerTel},
+		#{recipientName}, #{recipientZip}, #{recipientAddr1},
+		#{recipientAddr2},
+		#{recipientTel}, #{recipientPhone},
+		#{orderMessage},
+		#{productAmount}, #{finalAmount},
+		#{payType}, #{bankName},
+		#{depositName},
+		#{orderState}, #{mileageUse}, #{mileageAdd},
+		#{accountNumber})
+	</insert>
+	<insert id="gstOrderAdd" parameterType="order">
+		insert into guest_order
+		(orderNo, orderId, productsCount,
+		buyerName, buyerEmail, buyerPhone,
+		buyerTel,
+		recipientName, recipientZip, recipientAddr1, recipientAddr2,
+		recipientTel, recipientPhone,
+		orderMessage, productAmount, finalAmount,
+		payType, bankName, depositName,
+		orderState, accountNumber)
+		values
+		(#{orderNo}, #{orderId}, #{productsCount},
+		#{buyerName}, #{buyerEmail},
+		#{buyerPhone}, #{buyerTel},
+		#{recipientName}, #{recipientZip},
+		#{recipientAddr1},
+		#{recipientAddr2},
+		#{recipientTel},
+		#{recipientPhone},
+		#{orderMessage}, #{productAmount}, #{finalAmount},
+		#{payType}, #{bankName}, #{depositName},
+		#{orderState},
+		#{accountNumber})
+	</insert>
+	<select id="orderNoMax" parameterType="String" resultType="int">
+		select orderNo
+		from
+		<choose>
+			<when test="_parameter == 'guest'">
+				guest_order
+			</when>
+			<when test="_parameter == 'member'">
+				member_order
+			</when>
+		</choose>
+		order by orderNo DESC
+		limit 1
+	</select>
+	<insert id="gstOrderListAdd" parameterType="orderList">
+		insert into
+		guest_orderlist
+		values
+		(#{orderId},#{pno},#{pName},#{pQuantity},#{price},#{pImage})
+	</insert>
+	<select id="gstOrderGet" parameterType="map" resultType="order">
+		select *
+		from guest_order
+		where orderId=#{orderId}
+		<if test="buyerName != null">
+		 and buyerName=#{buyerName}
+		 </if>
+	</select>
+	<select id="gstOrderListGet" parameterType="String"
+		resultType="orderList">
+		select * from guest_orderlist
+		where orderId=#{orderId}
+	</select>
+	<insert id="mbOrderListAdd" parameterType="orderList">
+		insert into
+		member_orderlist
+		values
+		(#{orderId},#{pno},#{pName},#{pQuantity},#{price},#{pImage})
+	</insert>
+	<select id="mbOrderGet" parameterType="String"
+		resultType="order">
+		select * from member_order
+		where orderId=#{orderId}
+	</select>
+	<select id="mbOrderListGet" parameterType="String"
+		resultType="orderList">
+		select * from member_orderlist
+		where orderId=#{orderId}
+	</select>
+	<select id="todayGstOrderCount" resultType="int">
+		select count(*) from
+		guest_order
+		where curdate() = date_format(orderDate, '%Y-%m-%d')
+	</select>
+	<select id="todayGstOrderSum" resultType="int">
+		select sum(finalAmount)
+		from guest_order
+		where curdate() = date_format(orderDate, '%Y-%m-%d')
+	</select>
+	<select id="todayMbOrderCount" resultType="int">
+		select count(*) from
+		member_order
+		where curdate() = date_format(orderDate, '%Y-%m-%d')
+	</select>
+	<select id="todayMbOrderSum" resultType="int">
+		select sum(finalAmount)
+		from member_order
+		where curdate() = date_format(orderDate, '%Y-%m-%d')
+	</select>
+	<select id="monthGstOrderCount" resultType="int">
+		select count(*) from
+		guest_order
+			<![CDATA[
+			where date_format(orderDate, '%Y-%m-%d') >= DATE_ADD(date_format(now(), '%Y-%m-%d'), INTERVAL -1 MONTH)
+			and orderDate <= now()
+]]>
+	</select>
+	<select id="monthGstOrderSum" resultType="int">
+		select sum(finalAmount)
+		from guest_order
+			<![CDATA[
+			where date_format(orderDate, '%Y-%m-%d') >= DATE_ADD(date_format(now(), '%Y-%m-%d'), INTERVAL -1 MONTH)
+			and orderDate <= now()
+]]>
+	</select>
+	<select id="monthMbOrderCount" resultType="int">
+		select count(*) from
+		member_order
+			<![CDATA[
+			where date_format(orderDate, '%Y-%m-%d') >= DATE_ADD(date_format(now(), '%Y-%m-%d'), INTERVAL -1 MONTH)
+			and orderDate <= now()
+]]>
+	</select>
+	<select id="monthMbOrderSum" resultType="int">
+		select sum(finalAmount)
+		from member_order
+			<![CDATA[
+			where date_format(orderDate, '%Y-%m-%d') >= DATE_ADD(date_format(now(), '%Y-%m-%d'), INTERVAL -1 MONTH)
+			and orderDate <= now()
+]]>
+	</select>
+	<select id="orderList" resultType="order" parameterType="map">
+		(select orderDate, orderId, buyerName, payType, productAmount, finalAmount,
+		orderState, orderMessage
+		from guest_order
+		<trim prefix="where" prefixOverrides="and"> 
+		<if test="search.type != 'mbId' and search.keyword != null and search.keyword !=''">
+		 ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(orderDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(orderDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+		<if test="orderState !=null and orderState.size!=0">
+		and orderState in
+		  <foreach collection="orderState" item="state" open="(" close=")" separator=",">
+            #{state}
+        </foreach>
+		</if>
+		</trim>
+		)
+		UNION
+		(select orderDate, orderId, buyerName, payType, productAmount, finalAmount,
+		orderState, orderMessage
+		from member_order
+		<trim prefix="where" prefixOverrides="and"> 
+		<if test="search.keyword != null and search.keyword !=''">
+		 ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(orderDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(orderDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+		<if test="orderState !=null and orderState.size!=0">
+		and orderState in
+		  <foreach collection="orderState" item="state" index="index"  open="(" close=")" separator=",">
+            #{state}
+        </foreach>
+		</if>
+		</trim>
+		)
+		order by orderDate desc
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="mbOrderList" parameterType="map" resultType="order">
+		select orderDate, orderId, buyerName, payType, productAmount, finalAmount,
+		orderState, orderMessage
+		from member_order
+		<trim prefix="where" prefixOverrides="and"> 
+		<if test="search.keyword != null and search.keyword !=''">
+		 ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(orderDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(orderDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+			<if test="orderState !=null and orderState.size!=0">
+		and orderState in
+		  <foreach collection="orderState" item="state" index="index"  open="(" close=")" separator=",">
+            #{state}
+        </foreach>
+		</if>
+		</trim>
+		order by orderDate desc
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="mbOrderListCount" parameterType="map" resultType="int">
+		select count(*)
+		from member_order
+		<trim prefix="where" prefixOverrides="and"> 
+		<if test="search.keyword != null and search.keyword !=''">
+		 ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(orderDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(orderDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+			<if test="orderState !=null and orderState.size!=0">
+		and orderState in
+		  <foreach collection="orderState" item="state" index="index"  open="(" close=")" separator=",">
+            #{state}
+        </foreach>
+		</if>
+		</trim>
+	</select>
+	<select id="gstOrderList" parameterType="map" resultType="order">
+		select orderDate, orderId, buyerName, payType, productAmount, finalAmount,
+		orderState, orderMessage
+		from guest_order
+		<trim prefix="where" prefixOverrides="and"> 
+		<if test="search.keyword != null and search.keyword !=''">
+		 ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(orderDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(orderDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+			<if test="orderState !=null and orderState.size!=0">
+		and orderState in
+		  <foreach collection="orderState" item="state" index="index"  open="(" close=")" separator=",">
+            #{state}
+        </foreach>
+		</if>
+		</trim>
+		order by orderDate desc
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="gstOrderListCount" parameterType="map" resultType="int">
+		select count(*)
+		from guest_order
+		<trim prefix="where" prefixOverrides="and"> 
+		<if test="search.keyword != null and search.keyword !=''">
+		 ${search.type} like '%${search.keyword}%'
+		</if>
+		<if test="search.startDate != null and search.startDate !=''">
+		<![CDATA[
+  and date_format(orderDate, '%Y-%m-%d') >= #{search.startDate}
+    and date_format(orderDate, '%Y-%m-%d') <= #{search.endDate}
+]]>
+		</if>
+			<if test="orderState !=null and orderState.size!=0">
+		and orderState in
+		  <foreach collection="orderState" item="state" index="index"  open="(" close=")" separator=",">
+            #{state}
+        </foreach>
+		</if>
+		</trim>
+	</select>
+	<update id="mbStateUpdate" parameterType="map">
+	update member_order set
+	orderState=#{orderState}
+	where orderId=#{orderId}
+	</update>
+	<update id="gstStateUpdate" parameterType="map">
+	update guest_order set
+	orderState=#{orderState}
+	where orderId=#{orderId}
+	</update>
+</mapper>
