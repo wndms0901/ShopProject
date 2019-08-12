@@ -41,10 +41,20 @@ $(document).ready(function() {
 					<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
 					<li data-target="#slider-carousel" data-slide-to="1"></li>
 					<li data-target="#slider-carousel" data-slide-to="2"></li>
+					<li data-target="#slider-carousel" data-slide-to="3"></li>
+					<li data-target="#slider-carousel" data-slide-to="4"></li>
+					<li data-target="#slider-carousel" data-slide-to="5"></li>
 				</ol>
 
 				<div class="carousel-inner">
 					<div class="item active">
+						<div class="col-sm-12"
+							style="padding-right: 0px; padding-left: 0px;">
+							<img src="../images/home/slide04.jpg" class="girl img-responsive"
+								alt="" />
+						</div>
+					</div>
+					<div class="item">
 						<div class="col-sm-12"
 							style="padding-right: 0px; padding-left: 0px;">
 							<img src="../images/home/slide01.jpg" class="girl img-responsive"
@@ -54,11 +64,24 @@ $(document).ready(function() {
 					<div class="item">
 						<div class="col-sm-12"
 							style="padding-right: 0px; padding-left: 0px;">
+							<img src="../images/home/slide04.jpg" class="girl img-responsive"
+								alt="" />
+						</div>
+					</div>
+					<div class="item">
+						<div class="col-sm-12"
+							style="padding-right: 0px; padding-left: 0px;">
 							<img src="../images/home/slide02.jpg" class="girl img-responsive"
 								alt="" />
 						</div>
 					</div>
-
+					<div class="item">
+						<div class="col-sm-12"
+							style="padding-right: 0px; padding-left: 0px;">
+							<img src="../images/home/slide04.jpg" class="girl img-responsive"
+								alt="" />
+						</div>
+					</div>
 					<div class="item">
 						<div class="col-sm-12"
 							style="padding-right: 0px; padding-left: 0px;">
@@ -66,9 +89,7 @@ $(document).ready(function() {
 								alt="" />
 						</div>
 					</div>
-
 				</div>
-
 				<a href="#slider-carousel" class="left control-carousel hidden-xs"
 					data-slide="prev" style="top: 45%; margin: 0 50px;"> <i
 					class="fa fa-angle-left"></i>
@@ -77,13 +98,11 @@ $(document).ready(function() {
 					class="fa fa-angle-right"></i>
 				</a>
 			</div>
-
 		</div>
 	</div>
 	<!-- </div> -->
 </section>
 <!--/slider-->
-
 <section>
 	<div class="container">
 		<div class="row">

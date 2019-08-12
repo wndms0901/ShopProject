@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <footer id="footer" style="border-top:1px solid grey;"><!--Footer-->
 		
-		<div class="footer-widget" style="margin-bottom:50px;">
+		<div class="footer-widget" style="margin-bottom:30px;">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-2" style="width:40%;">
@@ -20,15 +20,11 @@
 					Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum.</a></span></p>
 						</div>
 					</div>
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<form action="#" class="searchform">
-								<input type="text" placeholder="Your email address" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-								<p>Get the most recent updates from <br />our site and be updated your self...</p>
-							</form>
-						</div>
+					<div class="col-sm-2" style="width:60%;">
+					<div class="single-widget" style="padding-top:40px;">
+						<p style="color:#000;font-weight:bold;font-size:25px;line-height:50px;">이 사이트는 실제 쇼핑몰이 아니라 개인 공부용 홈페이지 입니다.</p>
+						<p style="color:#000;font-weight:bold;font-size:25px">이 사이트에서 사용되는 이미지는 상업적으로 사용하지 않습니다.</p>
+					</div>
 					</div>
 					
 				</div>
