@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/adminHeader.jsp"%>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="../js/datepicker.js"></script>
 <script type="text/javascript">
 function update(pno){
 	window.open("/admin/product.do?mode=update&pno="+pno, "window", "width=925,height=950");
@@ -9,55 +10,6 @@ function update(pno){
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
-				$("#startDate").attr("disabled", true);
-				$("#endDate").attr("disabled", true);
-
-				$("#today").click(function() {
-					$("#startDate").attr("disabled", false);
-					$("#endDate").attr("disabled", false);
-					$("#startDate").datepicker('setDate', new Date());
-					$("#endDate").datepicker('setDate', new Date());
-				});
-				$("#week").click(function() {
-					$("#startDate").attr("disabled", false);
-					$("#endDate").attr("disabled", false);
-					var today = new Date();
-					$("#endDate").datepicker('setDate', today);
-					today.setDate(today.getDate() - 7);
-					$("#startDate").datepicker('setDate', today);
-				});
-				$("#month").click(function() {
-					$("#startDate").attr("disabled", false);
-					$("#endDate").attr("disabled", false);
-					var today = new Date();
-					$("#endDate").datepicker('setDate', today);
-					today.setMonth(today.getMonth() - 1);
-					$("#startDate").datepicker('setDate', today);
-				});
-				$("#thrMonth").click(function() {
-					$("#startDate").attr("disabled", false);
-					$("#endDate").attr("disabled", false);
-					var today = new Date();
-					$("#endDate").datepicker('setDate', today);
-					today.setMonth(today.getMonth() - 3);
-					$("#startDate").datepicker('setDate', today);
-				});
-				$("#year").click(function() {
-					$("#startDate").attr("disabled", false);
-					$("#endDate").attr("disabled", false);
-					var today = new Date();
-					$("#endDate").datepicker('setDate', today);
-					today.setYear(today.getFullYear() - 1);
-					$("#startDate").datepicker('setDate', today);
-				});
-				$("#total").click(function() {
-					$("#startDate").attr("disabled", true); //입력불가, 값 안넘어감
-					$("#endDate").attr("disabled", true); //입력불가, 값 안넘어감
-				});
-				$("#calendar").click(function() {
-					$("#startDate").attr("disabled", false);
-					$("#endDate").attr("disabled", false);
-				});
 				
 				$("#dlt-btn").click(function(){
 					var count=0;
@@ -108,17 +60,61 @@ $("#checkAll").click(function(){ /* 전체 체크박스 클릭 */
 	 });
 		});
 		
+//검색했을때 검색한 조건 출력하기
+var type = '<c:out value="${search.type}"/>';
+var keyword = '<c:out value="${search.keyword}"/>';
+var high = '<c:out value="${search.high}"/>';
+var medium = '<c:out value="${search.medium}"/>';
+var low = '<c:out value="${search.low}"/>';
+var startDate = '<c:out value="${search.startDate}"/>';
+var endDate = '<c:out value="${search.endDate}"/>';
+var pStatus = '<c:out value="${search.pStatus}"/>';
+if(type){ //검색어 출력
+$("select[name='type']").val(type);
+$("input[name='keyword']").val(keyword);
+}
+if(high){ //선택한 대분류 출력
+$("select[name='high']").val(high);
+if(!medium){
+var params = "?ctgry=medium&no="+ high;
+productService.categoryList(params);
+}
+}
+if(medium){ //선택한 중분류 출력
+	var params = "?ctgry=medium&no="+ high+"&mode=search&medium="+medium;
+	productService.categoryList(params);
+	if(!low){
+		var params = "?ctgry=low&no=" + medium;
+		productService.categoryList(params);
+		}
+}
+if(low){ //선택한 소분류 출력
+	var params = "?ctgry=low&no=" + medium+"&mode=search&low="+low;
+	productService.categoryList(params);
+}
+if(startDate){ //기간 출력
+	$("#startDate").attr("disabled", false);
+	$("#endDate").attr("disabled", false);
+	$("#startDate").datepicker('setDate', startDate); //startDate 출력
+	$("#endDate").datepicker('setDate', endDate); // endDate 출력
+}
+
+if(pStatus){ //상품상태 출력
+	$("input:radio[name='pStatus']:radio[value='"+pStatus+"']").prop('checked', true);
+}	
+		
 var page ='<c:out value="${pageMaker.cri.page}"/>';
 var startPage = '<c:out value="${pageMaker.startPage}"/>';
 var endPage = '<c:out value="${pageMaker.endPage}"/>';
-var type = '<c:out value="${search.type}"/>';
+
+//페이징처리(현재페이지 표시)
 $(".pageNum").each(function(index,item) {
 var pageNum = $(".pageNum i:eq(" +index+ ")").html();
 if(page==pageNum){
 $(".pageNum:eq("+index+")").addClass("active");
 }
 });
-
+//페이징처리(a태그 href에 page 파라미터 추가)
 var loc = $(location).attr('href'); 
 if(type==''){
 	var href =loc.split("?");
@@ -142,65 +138,6 @@ if(type==''){
 	$("#next a").attr("href",href[0]+"&page="+(Number(endPage)+1)); 
 }	
 });
-</script>
-<script>
-$(function() {
-	$("#startDate").datepicker(
-			{
-				dateFormat : 'yy-mm-dd',
-				prevText : '이전 달',
-				nextText : '다음 달',
-				monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
-						'8월', '9월', '10월', '11월', '12월' ],
-				monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
-						'7월', '8월', '9월', '10월', '11월', '12월' ],
-				dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
-				dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
-				dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-				showMonthAfterYear : true,
-				yearSuffix : '년',
-				onClose : function(selectedDate) {
-					// 시작일(startDate) datepicker가 닫힐때
-					// 종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-					$("#endDate").datepicker("option", "minDate",
-							selectedDate);
-				}
-			});
-	$("#endDate").datepicker(
-			{
-				dateFormat : 'yy-mm-dd',
-				prevText : '이전 달',
-				nextText : '다음 달',
-				monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
-						'8월', '9월', '10월', '11월', '12월' ],
-				monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
-						'7월', '8월', '9월', '10월', '11월', '12월' ],
-				dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
-				dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
-				dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-				showMonthAfterYear : true,
-				yearSuffix : '년',
-				onClose : function(selectedDate) {
-					// 종료일(endDate) datepicker가 닫힐때
-					// 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
-					$("#startDate").datepicker("option", "maxDate",
-							selectedDate);
-				}
-			});
-});
-$(function() {
-	$("#startDate").datepicker({
-		onSelect : function(dateText, inst) {
-		}
-	});
-	$("#endDate").datepicker({
-		onSelect : function(dateText, inst) {
-		}
-	});
-
-	$("#startDate").datepicker('setDate', new Date()); //startDate 기본날짜
-	$("#endDate").datepicker('setDate', new Date()); // endDate 기본날짜
-	});
 </script>
 
 <div class="right">

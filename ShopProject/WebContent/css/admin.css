@@ -260,7 +260,7 @@ solid
 	text-align: left;
 }
 
-.mngList table tr:first-child th {
+.mngList table tr:not(:last-child ) th{
 	border: 1px solid #d3dee4;
 }
 

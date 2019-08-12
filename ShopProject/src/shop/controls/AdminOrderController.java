@@ -34,7 +34,6 @@ public class AdminOrderController implements Controller, DataBinding {
 	public String execute(Map<String, Object> model) throws Exception {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		
-		
 		Search search = (Search) model.get("search"); // 검색 데이터
 		HttpServletRequest request = (HttpServletRequest) model.get("request");
 		String[] values = request.getParameterValues("orderState");
@@ -45,6 +44,7 @@ public class AdminOrderController implements Controller, DataBinding {
 				orderState.add(value);
 			}
 		}
+		model.put("orderState", orderState);
 		paramMap.put("search", search);
 
 		if (model.get("mode") == null) { // 주문 목록

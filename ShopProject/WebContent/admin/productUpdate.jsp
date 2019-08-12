@@ -117,7 +117,7 @@ $(document).ready(function() {
 	
 	//상품상태 선택
 	var pStatus = '<c:out value="${product.pStatus}"/>';
-	$("select[name='pStatus']").val(pStatus).prop("selected", true);
+	$("select[name='pStatus']").val(pStatus);
 	
 });
 
