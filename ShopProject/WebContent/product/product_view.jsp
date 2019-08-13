@@ -20,6 +20,9 @@
 				$("input[name=pQuantity]").val(pQuantity);
 				$(".total").html(AddComma(pQuantity * price) + "원");
 			}
+			if (pQuantity == stock) {
+				alert("최대 구매 수량은 "+stock+"개 입니다.");
+			}
 		});
 		$('#minus').on('click', function(event) { /* -버튼 */
 			var pQuantity = $("input[name=pQuantity]").val();
@@ -72,12 +75,12 @@
 						<div class="view-product">
 							<img src="../images/product/${product.pImage}" alt="" />
 						</div>
-						<div id="similar-product" class="carousel slide"
+						<!-- <div id="similar-product" class="carousel slide"
 							data-ride="carousel">
 							<p style="text-align: center">
 								<a href="#">보기</a> <a id="check" href=#></a>
 							</p>
-						</div>
+						</div> -->
 
 					</div>
 					<div class="col-sm-7">
@@ -124,9 +127,16 @@
 										</tr>
 									</table>
 									<div class="product-Btn">
+									<c:choose>
+									<c:when test="${product.pStock>0}">
 										<button type="button" id="btn1" data-toggle="modal"
 											data-target="#myCart">장바구니</button>
 										<button type="submit" id="btn2">구매하기</button>
+										</c:when>
+										<c:otherwise>
+										<button type="button" class="btn btn-primary disabled" id="soldout">sold out</button>
+										</c:otherwise>
+										</c:choose>
 									</div>
 								</form>
 							</div>

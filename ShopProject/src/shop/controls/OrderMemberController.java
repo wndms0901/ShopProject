@@ -99,7 +99,6 @@ public class OrderMemberController implements Controller, DataBinding {
 		} else { // 주문정보 insert
 			HashMap<String, Object> paramMap =new HashMap<String, Object>();
 			paramMap.put("mbId", mbId);
-			//param.put("mbId", mbId);
 			Mileage mileage =new Mileage();
 			int orderNo=orderDao.orderNoMax("member");
 			if(orderNo==0) {
@@ -150,6 +149,9 @@ public class OrderMemberController implements Controller, DataBinding {
 				orderList.setpQuantity(Integer.parseInt(pQuantity[i]));
 				orderDao.mbOrderListAdd(orderList); //주문 상품리스트 저장
 				memberDao.cartDlt(paramMap); //구매한 상품 cart DB에서 삭제
+				if(p.getpStock()==0) {
+					productDao.pSoldOut(Integer.parseInt(pno[i]));
+				}
 			}
 			model.put("products", orderDao.mbOrderListGet(orderId));
 			model.put("order",orderDao.mbOrderGet(orderId));

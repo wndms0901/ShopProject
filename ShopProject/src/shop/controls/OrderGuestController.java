@@ -114,6 +114,9 @@ public class OrderGuestController implements Controller, DataBinding {
 				orderList.setpQuantity(Integer.parseInt(pQuantity[i]));
 				orderDao.gstOrderListAdd(orderList); // 주문 상품리스트 저장
 				session.removeAttribute(pno[i]); // 장바구니에서 구매한 상품삭제
+				if(p.getpStock()==0) {
+					productDao.pSoldOut(Integer.parseInt(pno[i]));
+				}
 			}
 			paramMap.put("orderId", order.getOrderId());
 			paramMap.put("buyerName", order.getBuyerName());

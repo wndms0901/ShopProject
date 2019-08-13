@@ -165,6 +165,18 @@ public class MySqlProductDao implements ProductDao {
 	}
 
 	@Override
+	public int pSoldOut(int pno) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			int count = sqlSession.update("shop.dao.ProductDao.pSoldOut", pno);
+			sqlSession.commit();
+			return count;
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
 	public List<Product> productList(HashMap<String, Object> paramMap) throws Exception{
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {

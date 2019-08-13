@@ -3,6 +3,12 @@
 <%@include file="../includes/header.jsp"%>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="../js/address.js"></script>
+<script type="text/javascript">
+function loginCheck(){
+	var mbId= '<c:out value="${sessionScope.mbId}"/>';
+	 return mbId;
+}
+</script>
 <script src="../js/order.js"></script>
 <script type="text/javascript">
 $(document).ready(function() { 
@@ -121,6 +127,7 @@ $(document).ready(function() {
 	
 });
 </script>
+
 <section id="form" style="margin-top: 40px; margin-bottom: 130px;">
 	<div class="container" style="padding: 0;">
 		<h2
@@ -137,7 +144,7 @@ $(document).ready(function() {
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="order-form">
-					<form action="/order/orderMember.do" method="post">
+					<form name="orderForm" action="/order/orderMember.do" method="post">
 						<input type="hidden" name="productsCount"> <input
 							type="hidden" name="buyerPhone"> <input type="hidden"
 							name="buyerTel"> <input type="hidden" name="buyerEmail">
@@ -156,10 +163,11 @@ $(document).ready(function() {
 							</tr>
 							<c:forEach var="product" items="${products}">
 								<input type="hidden" name="pno" value="${product.pno}">
+								<input type="hidden" class="pStock" value="${product.pStock}">
 								<tr>
 									<th width="10%" style="padding-right:50px"><img src="../images/product/${product.pImage}"
 										width="110px" height="110px"></th>
-									<td width="50%">${product.pName }</td>
+									<td class="pName" width="50%">${product.pName }</td>
 									<th class="price">${product.price}</th>
 									<th><input type="text" name="pQuantity"
 										value="${product.pQuantity}" size="1" readonly></th>
@@ -348,7 +356,7 @@ $(document).ready(function() {
 							구매진행에 동의합니다.
 						</p>
 						<p style="text-align: center;">
-							<input type="submit" id="pay-btn" value="결제하기">
+							<input type="button" id="pay-btn" value="결제하기">
 						</p>
 					</form>
 				</div>

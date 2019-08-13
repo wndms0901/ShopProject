@@ -8,6 +8,7 @@ function removeCommas(x) { //모든 콤마 제거
     if(!x || x.length == 0) return "";
     else return x.split(",").join("");
 }
+
 $(document).ready(function() {
 		var length = $(".price").length; //상품개수
 		var hap =0; //전체 상품 합계
@@ -96,7 +97,6 @@ $(document).ready(function() {
 		$("#checkBank").focusin(function(){ //경고문구 제거
 			$("#checkBank p:last-child").remove();
 		});
-		
 		$("#pay-btn").click(function(){ //결제하기 버튼
 			
 			$("td").each(function(index,item) {
@@ -112,6 +112,34 @@ $(document).ready(function() {
 			 var agree= $("input[id='agree']").is(':checked');
 			 if(!agree){ //구매진행 동의 체크 안했을때
 				 alert("구매진행에 동의가 필요합니다.");
+				 return false;
+			 }
+			 var mbId = loginCheck();
+			 var stockCheck= false;
+			 $("input[name='pno']").each(function(index,item) {
+				var pno = $("input[name='pno']:eq("+index+")").val();
+				var pQuantity = $("input[name='pQuantity']:eq("+index+")").val();
+				var pName = $(".pName:eq("+index+")").html();
+			    var params = "?pno="+pno+"&pQuantity="+pQuantity;
+				var result= productService.pStockCheck(params);
+				if(result==1){ //상품 재고가 없을때
+					alert(pName+" 상품이 품절되었습니다. 다시 주문해주세요.");
+					stockCheck= true;
+				}
+				else if(result==2){ //상품재고<주문수량일때
+					var param = "?pno="+pno;
+					 var pStock = productService.pStock(param);
+					alert(pName+" 상품의 최대 주문수량은 "+pStock+"개 입니다. 다시 주문해주세요.");
+					stockCheck= true;
+				}
+			 });
+			 if(stockCheck){ //품절된 상품이 존재할때
+				 if(mbId){ //로그인 했을때
+					 history.go(-1);
+					 window.location = document.referrer;
+				 }else{
+					 history.go(-2);
+				 }
 				 return false;
 			 }
 			 
@@ -147,5 +175,6 @@ $(document).ready(function() {
 					 		mileageUse = mileageUse.replace(/,/g,"");
 					 	}	
 					 $("input[name='mileageUse']").val(Number(mileageUse));
+					 document.orderForm.submit();
 		});
 });

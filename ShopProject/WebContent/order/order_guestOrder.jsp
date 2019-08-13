@@ -3,6 +3,12 @@
 <%@include file="../includes/header.jsp"%>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="../js/address.js"></script>
+<script>
+function loginCheck(){
+	var mbId= '<c:out value="${sessionScope.mbId}"/>';
+	 return mbId;
+}
+</script>
 <script src="../js/order.js"></script>
 <script>
 $(document).ready(function() {
@@ -27,7 +33,7 @@ $(".mileage").each(function(index,item) {
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="order-form">
-					<form action="/order/orderGuest.do" method="post">
+					<form name="orderForm" action="/order/orderGuest.do" method="post">
 						<input type="hidden" name="productsCount"> <input
 							type="hidden" name="buyerPhone"> <input type="hidden"
 							name="buyerTel"> <input type="hidden" name="buyerEmail">
@@ -45,10 +51,11 @@ $(".mileage").each(function(index,item) {
 							</tr>
 							<c:forEach var="product" items="${products}">
 								<input type="hidden" name="pno" value="${product.pno}">
+								<input type="hidden" class="pStock" value="${product.pStock}">
 								<tr>
 									<th width="10%" style="padding-right:50px"><img src="../images/product/${product.pImage}"
 										width="110px" height="110px"></th>
-									<td width="50%">${product.pName }</td>
+									<td class="pName" width="50%">${product.pName }</td>
 									<th class="price">${product.price}</th>
 									<th><input type="text" name="pQuantity"
 										value="${product.pQuantity}" size="1" readonly></th>
@@ -229,7 +236,7 @@ $(".mileage").each(function(index,item) {
 							동의합니다.
 						</p>
 						<p style="text-align: center;">
-							<input type="submit" id="pay-btn" value="결제하기">
+							<input type="button" id="pay-btn" value="결제하기">
 						</p>
 					</form>
 				</div>

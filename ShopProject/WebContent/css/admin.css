@@ -120,7 +120,8 @@ header #logout a:hover {
 }
 
 footer {
-	height: 60px;
+	padding:30px;
+	height: 90px;
 	background-color: #f3f3f3;
 	border-top: 1px solid #d3dee4;
 	text-align: center;
@@ -128,7 +129,6 @@ footer {
 }
 
 footer p {
-	line-height: 60px;
 	margin: 0;
 }
 

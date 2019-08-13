@@ -164,6 +164,13 @@
 	margin-left: 5px;
 	background: #FEBA0F;
 }
+.product-Btn #soldout{
+	width:100%;
+	border:1px solid #323232;
+	background: #8D8B88;
+	font-size: 28px;
+	font-weight:bold;
+}
 
 #shop { /* 모달창 계속쇼핑 버튼 */
 	padding: 6px 16px;

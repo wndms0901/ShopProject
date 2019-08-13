@@ -182,6 +182,11 @@
 		pBuyNum = pBuyNum + ${pQuantity}
 		where pno=#{pno}
 	</update>
+	<update id="pSoldOut" parameterType="int">
+		update product set
+		pStatus="품절"
+		where pno=#{pno}
+	</update>
 	<select id="productList" resultType="product"
 		parameterType="map">
 	select p.pno,

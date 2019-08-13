@@ -34,12 +34,14 @@ public interface ProductDao {
 	public int pStockMinus(HashMap<String, Object> paramMap) throws Exception;
 
 	public int pBuyNumUpdate(HashMap<String, Object> paramMap) throws Exception;
+	
+	public int pSoldOut(int pno) throws Exception;
 
 	public List<Product> productList(HashMap<String, Object> paramMap) throws Exception;
 	
 	public int productListCount(Search search) throws Exception;
 
-	public int pDelete(int pno);
+	public int pDelete(int pno) throws Exception;
 
-	public int pUpdate(Product product);
+	public int pUpdate(Product product) throws Exception;
 }

@@ -70,10 +70,24 @@ public class OrderCartController implements Controller, DataBinding {
 					continue;
 				}
 				Product product = productDao.pGet(Integer.parseInt(pno)); // 상품정보 가져오기
-				// 수량 set
-				product.setpQuantity(Integer.parseInt(session.getAttribute(pno).toString()));
-				products.add(product); // list에 담기
-				sessionCount++;
+				int pQuantity = Integer.parseInt(session.getAttribute(pno).toString());
+				if(product.getpStock()>0) {
+					//상품재고<주문수량일 경우 주문수량을 상품재고 개수로 업데이트 함
+					if(product.getpStock()<pQuantity) {
+						session.setAttribute(pno, product.getpStock());
+						// 수량 set
+						product.setpQuantity(product.getpStock());
+						products.add(product); // list에 담기
+						sessionCount++;
+					}else {
+						// 수량 set
+						product.setpQuantity(pQuantity);
+						products.add(product); // list에 담기
+						sessionCount++;
+					}
+				}else { //품절된 상품은 장바구니에서 제거함
+					session.removeAttribute(pno);
+				}
 			}
 			if (sessionCount > 0) { // 로그인x , 장바구니에 상품이 있을때
 				model.put("products", products);
@@ -90,12 +104,10 @@ public class OrderCartController implements Controller, DataBinding {
 				model.put("pQuantity", request.getParameterValues("pQuantity"));
 				int check = memberDao.mbCheck(param);
 				if (check == 0) { // 로그인 실패
-					System.out.println("로그인 실패!!!!!!!!!!!");
 					model.put("mbCheck", false);
 					return "/order/order_loginCart.jsp";
 				} else { // 로그인 성공
 					session.setAttribute("mbId", model.get("mbId"));
-					// HashMap<String, Object> paramMap = new HashMap<String, Object>();
 					String[] pno = request.getParameterValues("pno");
 					String[] quantity = request.getParameterValues("pQuantity");
 					for (int i = 0; i < pno.length; i++) { //회원 cart에 상품 insert
@@ -105,9 +117,6 @@ public class OrderCartController implements Controller, DataBinding {
 							memberDao.cartmAdd(param); // 아이디,상품수 등록(insert)
 							memberDao.cartpAdd(model.get("mbId").toString());// 상품정보 등록(update)
 						} catch (PersistenceException e) { // 이미 장바구니에 있는 상품일 경우
-							// HashMap<String, Object> param = new HashMap<String, Object>();
-							// param.put("mbId", mbId);
-							// param.put("pno", Integer.parseInt(pno));
 							int qnt = memberDao.cartQuantity(param); // 상품 수량 가져오기
 							qnt += Integer.parseInt(quantity[i]); // 원래수량에 더하기
 							param.put("pQuantity", qnt);
@@ -119,6 +128,7 @@ public class OrderCartController implements Controller, DataBinding {
 			// 로그인 했을때
 			String mbId = session.getAttribute("mbId").toString();
 			HashMap<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("mbId", mbId);
 			memberDao.cartCheck(mbId); // 30일 지난 상품 삭제
 			List<Cart> products = memberDao.cartRead(mbId);
 			if (products.size() > 0) { // 로그인o, 장바구니에 상품이 있을때
@@ -128,8 +138,17 @@ public class OrderCartController implements Controller, DataBinding {
 						paramMap.put("pno", products.get(i).getPno());
 						memberDao.cartDlt(paramMap);
 					}
+					 //상품재고<주문수량일 경우 주문수량을 상품재고 개수로 업데이트 함
+					if(stock<products.get(i).getpQuantity()) {
+						paramMap.put("pno", products.get(i).getPno());
+						paramMap.put("pQuantity", stock);
+						memberDao.cartChg(paramMap);
+					}
 				}
 				products = memberDao.cartRead(mbId);
+				if(products.size()==0) {
+					return "order_empCart.jsp";
+				}
 				for (int i = 0; i < products.size(); i++) { // 현재 상품재고 set
 					int stock = productDao.pStock(products.get(i).getPno());
 					products.get(i).setpStock(stock);
