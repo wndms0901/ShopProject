@@ -2,8 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
 <script type="text/javascript">
-
+function AddComma(data_value) { //숫자 3자리 단위마다 ,추가하기
+	return Number(data_value).toLocaleString('en');
+}
 $(document).ready(function(){
+	 $(".price").each(function(index,item) {
+	var price = $(".price:eq("+index+")").html();
+	$(".price:eq("+index+")").html(AddComma(price)+"원");
+	 });
+	 
 	var pName ="${pName}";
 	var pCompany = "${pCompany}";
 	var sort = "${sort}"; 
@@ -117,7 +124,7 @@ $(document).ready(function(){
 									<a href="/product/view.do?pno=${p.pno}"><img
 										src="../images/product/${p.pImage}" alt="" /></a>
 									<h2>${p.pName}</h2>
-									<p>${p.price}</p>
+									<p class="price">${p.price}</p>
 								</div>
 							</div>
 						</div>
