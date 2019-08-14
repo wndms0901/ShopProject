@@ -39,7 +39,6 @@ public class DispatcherServlet extends HttpServlet {
 			model.put("response", response); // ajax 출력할때 사용
 			String check = servletPath.substring(servletPath.length() - 4, servletPath.length() - 3);
 			System.out.println(check);
-			/* String pageControllerPath = null; */
 			if (check.equals("A")) { // 페이지 이동을 하지않을때
 				VoidController pageController = (VoidController) ctx.getBean(servletPath);
 				System.out.println("ajaxController...............");
@@ -59,7 +58,7 @@ public class DispatcherServlet extends HttpServlet {
 
 				if (pageController instanceof DataBinding) {
 					if (request.getMethod().equals("POST") && servletPath.equals("/admin/product.do")) {
-						System.out.println("파일등록................................");
+						System.out.println("상품 이미지 등록................................");
 						String fileurl = "D:\\JSP\\ShopProject\\WebContent\\images\\product"; // 업로드된 파일이 저장될 파일경로
 						//String fileurl = "D:\\eclipse-workspace\\ShopProject\\WebContent\\images\\product";
 						String encType = "UTF-8"; // 인코딩 타입
@@ -69,10 +68,10 @@ public class DispatcherServlet extends HttpServlet {
 						MultipartRequest multi = new MultipartRequest(request, fileurl, Maxsize, encType, policy);
 						prepareRequestData(multi, model, (DataBinding) pageController);
 					}else if(request.getMethod().equals("POST") && servletPath.equals("/admin/board.do")) {
-						System.out.println("파일등록................................");
+						System.out.println("게시판 이미지 등록................................");
 						int Maxsize = 5 * 1024 * 1024; // 업로드할 파일의 최대크기
-						String fileurl = "D:\\JSP\\ShopProject\\WebContent\\images\\board"; // 업로드된 파일이 저장될 파일경로
-						//String fileurl = "D:\\eclipse-workspace\\ShopProject\\WebContent\\images\\board";
+						//String fileurl = "D:\\JSP\\ShopProject\\WebContent\\images\\board"; // 업로드된 파일이 저장될 파일경로
+						String fileurl = "D:\\eclipse-workspace\\ShopProject\\WebContent\\images\\board";
 						String encType = "UTF-8"; // 인코딩 타입
 						// 업로드 파일명이 중복 될 경우 (n)이 파일명 뒤에 붙어서 업로드됨
 						DefaultFileRenamePolicy policy = new DefaultFileRenamePolicy();
@@ -99,7 +98,7 @@ public class DispatcherServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("error", e);
-			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("../404.html");
 			rd.forward(request, response);
 		}
 	}

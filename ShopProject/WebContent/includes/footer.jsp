@@ -11,10 +11,10 @@
 						<ul class="nav nav-pills nav-stacked">
 							<li>주소 : 대구광역시 동구 00동 000-000 주식회사 펫마트</li>
 							<li>대표자 : 정주은</li>
-							<li>이메일 : cherry25987@gmail.com</li>
 						</ul>
 					</div>
 					<div class="row" style="margin:0px;">
+					<p>이메일 : <a href="mailto:cherry25987@gmail.com" style="display:inline">cherry25987@gmail.com</a></p>
 					<p>Copyright © 2019 Jeong Jueun Inc. All rights reserved.<br>
 					Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum.</a></span></p>
 						</div>
@@ -33,7 +33,7 @@
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
-				<a>HOME</a> <font>|</font>
+				<a href="/main/list.do">HOME</a> <font>|</font>
 				<a>회사소개</a> <font>|</font>
 				<a>개인정보처리방침</a> <font>|</font>
 				<a>이용약관</a> <font>|</font>

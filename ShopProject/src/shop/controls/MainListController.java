@@ -20,14 +20,6 @@ public class MainListController implements Controller{
 		return this;
 	}
 	
-	/*@Override
-	public Object[] getDataBinders() {
-		return new Object[] {
-				"newProduct",shop.vo.Product.class,"bestProduct",shop.vo.Product.class
-		};
-	}
-*/
-
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
 		model.put("newProduct", productDao.newMain()); //신상품12개
@@ -37,7 +29,7 @@ public class MainListController implements Controller{
 		model.put("low2",categoryDao.lowCtgry2()); //고양이 카테고리
 		model.put("small",categoryDao.smallCtgry()); //소동물 카테고리
 		model.put("list", categoryDao.CtgryAll()); //모달창 카테고리
-		return "/main/index.jsp";
+		return "/main/main.jsp";
 	}
 
 }

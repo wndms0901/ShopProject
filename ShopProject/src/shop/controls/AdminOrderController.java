@@ -44,7 +44,6 @@ public class AdminOrderController implements Controller, DataBinding {
 				orderState.add(value);
 			}
 		}
-		model.put("orderState", orderState);
 		paramMap.put("search", search);
 
 		if (model.get("mode") == null) { // 주문 목록
@@ -90,6 +89,7 @@ public class AdminOrderController implements Controller, DataBinding {
 				model.put("total", total);
 				model.put("pageMaker", pageMaker); // 페이징
 			}
+			model.put("orderState", orderState);
 			return "/admin/orderList.jsp";
 		} else if (model.get("mode").equals("read")) { // 주문상세내역
 			// 비회원 paramMap에 buyName 없이 출력해보기
