@@ -70,8 +70,8 @@ public class DispatcherServlet extends HttpServlet {
 					}else if(request.getMethod().equals("POST") && servletPath.equals("/admin/board.do")) {
 						System.out.println("게시판 이미지 등록................................");
 						int Maxsize = 5 * 1024 * 1024; // 업로드할 파일의 최대크기
-						//String fileurl = "D:\\JSP\\ShopProject\\WebContent\\images\\board"; // 업로드된 파일이 저장될 파일경로
-						String fileurl = "D:\\eclipse-workspace\\ShopProject\\WebContent\\images\\board";
+						String fileurl = "D:\\JSP\\ShopProject\\WebContent\\images\\board"; // 업로드된 파일이 저장될 파일경로
+						//String fileurl = "D:\\eclipse-workspace\\ShopProject\\WebContent\\images\\board";
 						String encType = "UTF-8"; // 인코딩 타입
 						// 업로드 파일명이 중복 될 경우 (n)이 파일명 뒤에 붙어서 업로드됨
 						DefaultFileRenamePolicy policy = new DefaultFileRenamePolicy();
@@ -96,9 +96,8 @@ public class DispatcherServlet extends HttpServlet {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			request.setAttribute("error", e);
-			RequestDispatcher rd = request.getRequestDispatcher("../404.html");
+			RequestDispatcher rd = request.getRequestDispatcher("../Error.html");
 			rd.forward(request, response);
 		}
 	}
