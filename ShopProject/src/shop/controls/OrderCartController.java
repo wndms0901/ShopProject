@@ -107,6 +107,7 @@ public class OrderCartController implements Controller, DataBinding {
 					model.put("mbCheck", false);
 					return "/order/order_loginCart.jsp";
 				} else { // 로그인 성공
+					memberDao.mbLogin(model.get("mbId").toString()); // 로그인 시간 저장
 					session.setAttribute("mbId", model.get("mbId"));
 					String[] pno = request.getParameterValues("pno");
 					String[] quantity = request.getParameterValues("pQuantity");
