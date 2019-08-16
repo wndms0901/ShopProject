@@ -28,6 +28,8 @@ public interface MemberDao {
 	public int cartpAdd(String mbId) throws Exception;
 
 	public List<Cart> cartRead(String mbId) throws Exception;
+	
+	public int cartProductCheck(HashMap<String, Object> paramMap) throws Exception;
 
 	public int cartChg(HashMap<String, Object> paramMap) throws Exception;
 

@@ -131,6 +131,16 @@ public class MySqlMemberDao implements MemberDao {
 	}
 
 	@Override
+	public int cartProductCheck(HashMap<String, Object> paramMap) throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		try {
+			return sqlSession.selectOne("shop.dao.MemberDao.cartProductCheck", paramMap);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
 	public int cartChg(HashMap<String, Object> paramMap) throws Exception {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {

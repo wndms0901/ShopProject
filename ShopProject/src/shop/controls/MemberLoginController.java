@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.exceptions.PersistenceException;
-
 import shop.annotation.Component;
 import shop.bind.DataBinding;
 import shop.dao.MySqlCategoryDao;
@@ -62,21 +60,20 @@ public class MemberLoginController implements Controller, DataBinding {
 				} else { //일반회원 로그인
 					while (cart.hasMoreElements()) { // 세션에 저장된 상품도 cart DB에 insert
 						String pno = cart.nextElement();
-						System.out.println("session: " + pno);
 						if (pno.equals("mbId") || pno.startsWith("javax")) {
 							continue;
 						}
 						String pQuantity = session.getAttribute(pno).toString();
 						paramMap.put("pno", Integer.parseInt(pno));
 						paramMap.put("pQuantity", Integer.parseInt(pQuantity));
-						try {
-							memberDao.cartmAdd(paramMap); // 아이디,상품수 등록(insert)
-							memberDao.cartpAdd(mbId);// 상품정보 등록(update)
-						} catch (PersistenceException e) { // 이미 장바구니에 있는 상품일 경우
-							HashMap<String, Object> param = new HashMap<String, Object>();
-							param.put("mbId", mbId);
-							param.put("pno", Integer.parseInt(pno));
-							int quantity = memberDao.cartQuantity(param); // 상품 수량 가져오기
+						
+						int result = memberDao.cartProductCheck(paramMap);
+						
+						if(result==0) { //장바구니에 없는 상품일 경우
+							memberDao.cartmAdd(paramMap); //아이디,상품수 등록(insert)
+							memberDao.cartpAdd(mbId);// 상품정보 등록(update)	
+						}else { //이미 장바구니에 있는 상품일 경우
+							int quantity = memberDao.cartQuantity(paramMap); // 상품 수량 가져오기
 							quantity += Integer.parseInt(pQuantity); // 원래수량에 더하기
 							paramMap.put("pQuantity", quantity);
 							memberDao.cartChg(paramMap); // 수량 업데이트

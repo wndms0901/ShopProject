@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.exceptions.PersistenceException;
-
 import shop.annotation.Component;
 import shop.bind.DataBinding;
 import shop.dao.MySqlMemberDao;
@@ -44,19 +42,17 @@ public class OrderCartAController implements VoidController, DataBinding {
 			paramMap.put("pQuantity",Integer.parseInt(pQuantity));
 			paramMap.put("mbId", mbId);
 			paramMap.put("pno", Integer.parseInt(pno));
-			try {
+			int result = memberDao.cartProductCheck(paramMap);
+			
+			if(result==0) { //장바구니에 없는 상품일 경우
 				memberDao.cartmAdd(paramMap); //아이디,상품수 등록(insert)
 				memberDao.cartpAdd(mbId);// 상품정보 등록(update)	
-			} catch (PersistenceException e) { //이미 장바구니에 있는 상품일 경우
-				HashMap<String, Object> param = new HashMap<String, Object>();
-				param.put("mbId", mbId);
-				param.put("pno", Integer.parseInt(pno));
-				int quantity =memberDao.cartQuantity(param); //상품 수량 가져오기
+			}else { //이미 장바구니에 있는 상품일 경우
+				int quantity =memberDao.cartQuantity(paramMap); //상품 수량 가져오기
 				quantity+=Integer.parseInt(pQuantity); // 원래수량에 더하기
 				paramMap.put("pQuantity",quantity);
 				memberDao.cartChg(paramMap); //수량 업데이트
 			}
-			
 		}
 		/*
 		 * HttpServletResponse response= (HttpServletResponse)model.get("response");

@@ -9,8 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.exceptions.PersistenceException;
-
 import shop.annotation.Component;
 import shop.bind.DataBinding;
 import shop.dao.MySqlCategoryDao;
@@ -112,17 +110,19 @@ public class OrderCartController implements Controller, DataBinding {
 					String[] pno = request.getParameterValues("pno");
 					String[] quantity = request.getParameterValues("pQuantity");
 					for (int i = 0; i < pno.length; i++) { //회원 cart에 상품 insert
-						try {
 							param.put("pno", pno[i]);
 							param.put("pQuantity", quantity[i]);
-							memberDao.cartmAdd(param); // 아이디,상품수 등록(insert)
-							memberDao.cartpAdd(model.get("mbId").toString());// 상품정보 등록(update)
-						} catch (PersistenceException e) { // 이미 장바구니에 있는 상품일 경우
-							int qnt = memberDao.cartQuantity(param); // 상품 수량 가져오기
-							qnt += Integer.parseInt(quantity[i]); // 원래수량에 더하기
-							param.put("pQuantity", qnt);
-							memberDao.cartChg(param); // 수량 업데이트
-						}
+							int result = memberDao.cartProductCheck(param);
+							
+							if(result==0) { //장바구니에 없는 상품일 경우
+								memberDao.cartmAdd(param); //아이디,상품수 등록(insert)
+								memberDao.cartpAdd(model.get("mbId").toString());// 상품정보 등록(update)	
+							}else { //이미 장바구니에 있는 상품일 경우
+								int qnt =memberDao.cartQuantity(param); //상품 수량 가져오기
+								qnt+=Integer.parseInt(quantity[i]); // 원래수량에 더하기
+								param.put("pQuantity",qnt);
+								memberDao.cartChg(param); //수량 업데이트
+							}
 					}
 				}
 			}

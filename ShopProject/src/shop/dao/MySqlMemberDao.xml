@@ -75,6 +75,10 @@
 		order
 		by cartRegisterDate desc
 	</select>
+	<select id="cartProductCheck" parameterType="map" resultType="int">
+	select count(*) from cart
+	 where mbId=#{mbId} and pno=#{pno}
+	</select>
 	<select id="cartQuantity" parameterType="map" resultType="int">
 		select
 		pQuantity
