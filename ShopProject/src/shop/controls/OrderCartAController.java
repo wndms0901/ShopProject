@@ -26,12 +26,12 @@ public class OrderCartAController implements VoidController, DataBinding {
 	public void execute(Map<String, Object> model) throws Exception {
 		System.out.println("CartA Controller 실행.............");
 		String pno = model.get("pno").toString();
-		String pQuantity = model.get("pQuantity").toString();
+		int pQuantity = Integer.parseInt(model.get("pQuantity").toString());
 		HttpSession session = (HttpSession) model.get("session");
 		if (session.getAttribute("mbId") == null) { /*로그인 안했을 때*/
 			if (session.getAttribute(pno) != null) { // 이미 장바구니에 있는경우 수량 +
-				int quantity = (Integer) session.getAttribute(pno);
-				quantity += Integer.parseInt(pQuantity);
+				int quantity = Integer.parseInt(session.getAttribute(pno).toString());
+				quantity += pQuantity;
 				session.setAttribute(pno, quantity);
 			} else { // 장바구니에 없는 상품일 때
 				session.setAttribute(pno, pQuantity);
@@ -39,7 +39,7 @@ public class OrderCartAController implements VoidController, DataBinding {
 		} else { /*로그인 했을때*/
 			HashMap<String, Object> paramMap = new HashMap<String, Object>();
 			String mbId = session.getAttribute("mbId").toString();
-			paramMap.put("pQuantity",Integer.parseInt(pQuantity));
+			paramMap.put("pQuantity",pQuantity);
 			paramMap.put("mbId", mbId);
 			paramMap.put("pno", Integer.parseInt(pno));
 			int result = memberDao.cartProductCheck(paramMap);
@@ -49,7 +49,7 @@ public class OrderCartAController implements VoidController, DataBinding {
 				memberDao.cartpAdd(mbId);// 상품정보 등록(update)	
 			}else { //이미 장바구니에 있는 상품일 경우
 				int quantity =memberDao.cartQuantity(paramMap); //상품 수량 가져오기
-				quantity+=Integer.parseInt(pQuantity); // 원래수량에 더하기
+				quantity+=pQuantity; // 원래수량에 더하기
 				paramMap.put("pQuantity",quantity);
 				memberDao.cartChg(paramMap); //수량 업데이트
 			}
